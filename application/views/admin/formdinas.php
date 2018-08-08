@@ -1,0 +1,267 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 col-sm-4">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title"><span class="glyphicon glyphicon-list-alt"></span> Form Dinas</h3>
+              </div>
+              <div class="panel-body">
+                  <form action="#">
+                      <div class="form-group">
+                        <label for="kelembagaan">Nama Kelembagaan</label>
+                        <input type="text" class="form-control" id="kelembagaan" placeholder="">
+                        <input type="hidden" name="id_dinas" id="id_dinas" value="">
+                      </div>
+                      <div class="form-group">
+                        <label for="provinsi">Provinsi/Kota/Kabupaten</label>
+                        <select class="form-control" name="wilayah" id="wilayah">
+                          <option value="Kota Bandung">Kota Bandung</option>
+                          <option value="Kota Cimahi">Kota Cimahi</option>
+                          <option value="Kabupaten Bandung Barat">Kabupaten Bandung Barat</option>
+                          <option value="Provinsi Jawa Barat">Provinsi Jawa Barat</option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="pimpinan">Pimpinan</label>
+                        <input type="text" class="form-control" id="pimpinan" placeholder="">
+                      </div>
+                      <div class="form-group">
+                        <label for="alamat">Alamat</label>
+                        <textarea name="alamat" class="form-control" id="alamat"></textarea>
+                      </div>
+                      <div class="form-group">
+                        <label for="koordinat">Koordinat</label>
+                        <input type="text" class="form-control" id="latitude" placeholder="lat">
+                        <input type="text" class="form-control" id="longitude" placeholder="lng">
+                      </div>
+                      <div class="form-group">
+                        <label for="telepon">Telepon</label>
+                        <input type="text" class="form-control" id="telepon" placeholder="">
+                      </div>
+                      <div class="form-group">
+                        <label for="fax">Fax</label>
+                        <input type="text" class="form-control" id="fax" placeholder="">
+                      </div>
+                      <div class="form-group">
+                        <button type="button" name="simpandinas" id="simpandinas" class="btn btn-primary">Simpan</button>
+                        <button type="button" name="resetdinas"  id="resetdinas" class="btn btn-warning">Reset</button>
+                        <button type="button" name="updatedinas" id="updatedinas" class="btn btn-info" disabled="true">Update</button>
+                      </div>
+                  </form>
+              </div>
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-8">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title"><span class="glyphicon glyphicon-list"></span> Daftar Dinas</h3>
+              </div>
+              <div class="panel-body">
+                  <table id="DataTable" class="table table-bordered " style="width:100%">
+                    <thead>
+                      <th>No</th>
+                      <th>Nama Kelembagaan</th>
+                      <th>Wilayah</th>
+                      <th>Pimpinan</th>
+                      <th>Alamat</th>
+                      <th>Telepon</th>
+                      <th>Fax</th>
+                      <th></th>
+                    </thead>
+                      <tbody id="daftardinas">
+                          <?php
+                          $no = 1;
+                          foreach ($itemdinas->result() as $dinas) {
+                              ?>
+                              <tr>
+                                  <td><?php echo $no;?></td>
+                                  <td><?php echo $dinas->kelembagaan;?></td>
+                                  <td><?php echo $dinas->wilayah;?></td>
+                                  <td><?php echo $dinas->pimpinan;?></td>
+                                  <td><?php echo $dinas->alamat;?></td>
+                                  <td><?php echo $dinas->telepon;?></td>
+                                  <td><?php echo $dinas->fax;?></td>
+                                  <td>
+                                      <button type="button" class="btn btn-sm btn-info" data-iddinas="<?php echo $dinas->id_dinas;?>" name="editdinas<?php echo $dinas->id_dinas;?>" id="editdinas"><span class="glyphicon glyphicon-edit"></span></button>
+                                      <button type="button" class="btn btn-sm btn-danger" data-iddinas="<?php echo $dinas->id_dinas;?>" name="deletedinas<?php echo $dinas->id_dinas;?>" id="deletedinas"><span class="glyphicon glyphicon-trash"></span></button>
+                                  </td>
+                              </tr>
+                              <?php
+                              $no++;
+                          }
+                           ?>
+                      </tbody>
+                  </table>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).on('click','#simpandinas',simpandinas)
+    .on('click','#resetdinas',resetdinas)
+    .on('click','#updatedinas',updatedinas)
+    .on('click','#editdinas',editdinas)
+    .on('click','#deletedinas',deletedinas);
+
+    $(document).ready(function() {
+    var table = $('#DataTable').DataTable( {
+        responsive: true,
+        "lengthMenu": [ 5, 10, 25, 50, 75, 100 ]
+    } );
+
+    new $.fn.dataTable.FixedHeader( table );
+} );
+
+
+
+
+    function simpandinas() {//simpan jalan
+        var datadinas = {
+          'kelembagaan':$('#kelembagaan').val(),
+          'wilayah':$('#wilayah').val(),
+          'pimpinan':$('#pimpinan').val(),
+          'alamat':$('#alamat').val(),
+          'latitude':$('#latitude').val(),
+          'longitude':$('#longitude').val(),
+          'telepon':$('#telepon').val(),
+          'fax':$('#fax').val()
+        };
+
+        console.log(datadinas);
+        $.ajax({
+            url : '<?php echo site_url("admin/dinas/create");?>',
+            data : datadinas,
+            dataType : 'json',
+            type : 'POST',
+            success : function(data,status){
+                if (data.status!='error') {
+                    $('#daftardinas').load('<?php echo current_url()." #daftardinas > *";?>');
+                    resetdinas();//form langsung dikosongkan pas selesai input data
+                }else{
+                    alert(data.msg);
+                }
+            },
+            error : function(x,t,m){
+                alert(x.responseText);
+            }
+        })
+    }
+    function resetdinas() {//reset form jalan
+        $('#kelembagaan').val('');
+        $('#wilayah').val('');
+        $('#pimpinan').val('');
+        $('#alamat').val('');
+        $('#latitude').val('');
+        $('#longitude').val('');
+        $('#telepon').val('');
+        $('#fax').val('');
+        $('#simpandinas').attr('disabled',false);
+        $('#updatedinas').attr('disabled',true);
+    }
+
+        function editdinas() {//edit jalan
+        var id = $(this).data('iddinas');
+        var datadinas = {'id_dinas':id};console.log(datadinas);
+        $('input[name=editdinas'+id+']').attr('disabled',true);//biar ga di klik dua kali, maka di disabled
+        $.ajax({
+            url : '<?php echo site_url("admin/dinas/edit");?>',
+            data : datadinas,
+            dataType : 'json',
+            type : 'POST',
+            success : function(data,status){
+                if (data.status!='error') {
+                    $('input[name=editdinas'+id+']').attr('disabled',false);//disabled di set false, karena transaksi berhasil
+                    $('#simpandinas').attr('disabled',true);
+                    $('#updatedinas').attr('disabled',false);
+                    $.each(data.msg,function(k,v){
+                        $('#id_dinas').val(v['id_dinas']);
+                        $('#kelembagaan').val(v['kelembagaan']);
+                        $('#wilayah').val(v['wilayah']);
+                        $('#pimpinan').val(v['pimpinan']);
+                        $('#alamat').val(v['alamat']);
+                        $('#latitude').val(v['latitude']);
+                        $('#longitude').val(v['longitude']);
+                        $('#telepon').val(v['telepon']);
+                        $('#fax').val(v['fax']);
+                    })
+                }else{
+                    alert(data.msg);
+                    $('input[name=editdinas'+id+']').attr('disabled',false);//disabled di set false, karena transaksi berhasil
+                }
+            },
+            error : function(x,t,m){
+                alert(x.responseText);
+                $('input[name=editdinas'+id+']').attr('disabled',false);//disabled di set false, karena transaksi berhasil
+            }
+        })
+    }
+
+
+    function updatedinas() {//update jalan
+        var datadinas = {
+        'kelembagaan':$('#kelembagaan').val(),
+        'wilayah':$('#wilayah').val(),
+        'pimpinan':$('#pimpinan').val(),
+        'alamat':$('#alamat').val(),
+        'latitude':$('#latitude').val(),
+        'longitude':$('#longitude').val(),
+        'telepon':$('#telepon').val(),
+        'fax':$('#fax').val(),
+        'id_dinas':$('#id_dinas').val()
+      };console.log(datadinas);
+        $.ajax({
+            url : '<?php echo site_url("admin/dinas/update");?>',
+            data : datadinas,
+            dataType : 'json',
+            type : 'POST',
+            success : function(data,status){
+                if (data.status!='error') {
+                    $('#daftardinas').load('<?php echo current_url()." #daftardinas > *";?>');
+                    resetdinas();//form langsung dikosongkan pas selesai input data
+                }else{
+                    alert(data.msg);
+                }
+            },
+            error : function(x,t,m){
+                alert(x.responseText);
+            }
+        })
+    }
+
+
+    function deletedinas() {//delete jalan
+        if (confirm("Anda yakin akan menghapus data Dinas ini?")) {
+            var id = $(this).data('iddinas');
+            var datadinas = {'id_dinas':id};
+            console.log(datadinas);
+            $.ajax({
+                url : '<?php echo site_url("admin/dinas/delete");?>',
+                data : datadinas,
+                dataType : 'json',
+                type : 'POST',
+                success : function(data,status){
+                    if (data.status!='error') {
+                        $('#daftardinas').load('<?php echo current_url()." #daftardinas > *";?>');
+                        resetdinas();//form langsung dikosongkan pas selesai input data
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error : function(x,t,m){
+                    alert(x.responseText);
+                }
+            })
+        }
+    }
+
+</script>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
