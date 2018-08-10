@@ -43,12 +43,10 @@
                                         $nilaiJarak = $data['rows'][0]['elements'][0]['distance']['text'];
                                         echo $nilaiJarak;
                                         ?></td>
-                                        <td></td>
+                                        <td>#</td>
                                         <td>
                                             <button class="btn-info btn btn-sm" id="viewmarkerdinas" data-iddatadinas=<?php echo $dinas->id_dinas?>><span class="glyphicon glyphicon-eye-open"></span> Check</button>
-                                            <br>
                                             <button class="btn-danger btn btn-sm" id="hapusmarkerdinas" data-iddatadinas=<?php echo $dinas->id_dinas?>><span class="glyphicon glyphicon-eye-close"></span> Uncheck</button>
-                                            <br>
                                             <button class="btn-success btn btn-sm" id="gantistatusdinas" data-iddatadinas=<?php echo $dinas->id_dinas?>><span class="glyphicon glyphicon-cog"></span> Done</button>
                                         </td>
                                     </tr>

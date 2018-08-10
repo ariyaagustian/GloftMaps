@@ -231,7 +231,7 @@ initMap();
 
         function editdinas() {//edit jalan
         var id = $(this).data('iddinas');
-        var datadinas = {'id_dinas':id};console.log(datadinas);
+        var datadinas = {'id_dinas':id};
         $('input[name=editdinas'+id+']').attr('disabled',true);//biar ga di klik dua kali, maka di disabled
         $.ajax({
             url : '<?php echo site_url("admin/dinas/edit");?>',
