@@ -47,6 +47,7 @@ class Dinas extends CI_Controller{
                     if ($this->model_dinas->create()) {
                         $status = 'success';
                         $msg = "Data Dinas berhasil disimpan";
+
                     }else{
                         $status = 'error';
                         $msg = "terjadi kesalahan saat menyimpan data dinas";

@@ -5,13 +5,13 @@
 <div class="container">
     <div class="row">
 
-            <div class="panel panel-primary">
+            <div class="panel panel-default">
                 <div class="panel-heading"><span class="glyphicon glyphicon-globe"></span> Peta</div>
                 <div class="panel-body" style="height:500px;" id="map-canvas">
             </div>
         </div>
 
-            <div class="panel panel-primary">
+            <div class="panel panel-default">
                 <div class="panel-heading"><span class="glyphicon glyphicon-th-list">
                     </span> Daftar Koordinat marker Data dinas
                 </div>
@@ -23,7 +23,7 @@
                             <th>Alamat</th>
                             <th>Latitude</th>
                             <th>Longitude</th>
-                            <th>Action</th>
+                            <th></th>
                         </thead>
                         <tbody id="daftarkoordinatdinas">
                             <?php
@@ -38,8 +38,8 @@
                                         <td><?php echo $dinas->latitude;?></td>
                                         <td><?php echo $dinas->longitude;?></td>
                                         <td>
-                                            <button class="btn-info btn btn-sm" id="viewmarkerdinas" data-iddatadinas=<?php echo $dinas->id_dinas?><span class="glyphicon-globe glyphicon"></span> View marker</button>
-                                            <button class="btn-danger btn btn-sm" id="hapusmarkerdinas" data-iddatadinas="'.$dinas->id_dinas.'"><span class="glyphicon-remove glyphicon"></span></button>
+                                            <button class="btn-info btn btn-sm" id="viewmarkerdinas" data-iddatadinas=<?php echo $dinas->id_dinas?>><span class="glyphicon glyphicon-eye-open"></span></button>
+                                            <button class="btn-danger btn btn-sm" id="hapusmarkerdinas" data-iddatadinas="'.$dinas->id_dinas.'"><span class="glyphicon glyphicon-eye-close"></span></button>
                                         </td>
                                     </tr>
                                     <?php
