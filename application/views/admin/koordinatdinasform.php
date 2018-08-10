@@ -39,7 +39,7 @@
                                         <td><?php echo $dinas->longitude;?></td>
                                         <td>
                                             <button class="btn-info btn btn-sm" id="viewmarkerdinas" data-iddatadinas=<?php echo $dinas->id_dinas?>><span class="glyphicon glyphicon-eye-open"></span></button>
-                                            <button class="btn-danger btn btn-sm" id="hapusmarkerdinas" data-iddatadinas="'.$dinas->id_dinas.'"><span class="glyphicon glyphicon-eye-close"></span></button>
+                                            <button class="btn-danger btn btn-sm" id="hapusmarkerdinas" data-iddatadinas=<?php $dinas->id_dinas?>><span class="glyphicon glyphicon-eye-close"></span></button>
                                         </td>
                                     </tr>
                                     <?php
@@ -124,7 +124,7 @@ new $.fn.dataTable.FixedHeader( table );
     //buat hapus marker
     function setMapOnAll(map) {
       for (var i = 0; i < markers.length; i++) {
-        markers[i].setMap(map);
+          markers[i].setMap(map);
       }
       markers = [];
     }
@@ -163,22 +163,25 @@ new $.fn.dataTable.FixedHeader( table );
     }
     function hapusmarkerdinas(e){
         e.preventDefault();
-        var datakoordinat = {'id_koordinatdinas':$(this).data('id_koordinatdinas')};
-        $.ajax({
-            url : '<?php echo site_url("admin/koordinatdinas/delete") ?>',
-            data : datakoordinat,
-            dataType : 'json',
-            type : 'POST',
-            success : function(data,status){
-                if (data.status!='error') {
-                    alert(data.msg);
-                    $('#daftarkoordinatdinas').load('<?php echo current_url()."/ #daftarkoordinatdinas > *" ?>');
-                    clearmap(e);
-                }else{
-                    alert(data.msg);
-                }
-            }
-        })
+        var id = $(this).data('iddatadinas');
+        var datamarker = {'id_dinas':id};
+        console.log(datamarker);
+        clearmap(e);
+
+        // $.ajax({
+        //     url : '<?php echo site_url("admin/koordinatdinas/hapusmarkerdinas") ?>',
+        //     data : datakoordinat,
+        //     dataType : 'json',
+        //     type : 'POST',
+        //     success : function(data,status){
+        //         if (data.status!='error') {
+        //             alert(data.msg);
+        //             $('#daftarkoordinatdinas').load('<?php echo current_url()."/ #daftarkoordinatdinas > *" ?>');
+        //         }else{
+        //             alert(data.msg);
+        //         }
+        //     }
+        // })
     }
     function viewmarkerdinas(){
         var id = $(this).data('iddatadinas');
