@@ -37,7 +37,7 @@
                       </div>
                       <div class="form-group">
                         <label for="koordinat">Koordinat</label>
-                        <div class="row"> 
+                        <div class="row">
                             <div class="col-md-6 col-sm-6">
                                 <input type="text" class="form-control" id="latitude" placeholder="latitude" disabled="true">
                             </div>
@@ -215,7 +215,7 @@ initMap();
 //           var lng = event.latLng.lng();
 //           $('#latitude').val(lat);
 //           $('#longitude').val(lng);
-          
+
 //         });
 //     }
 
@@ -271,10 +271,10 @@ initMap();
 
 //             marker.setPosition(place.geometry.location);
 //             marker.setVisible(true);
-//           });    
+//           });
 //       });
 
-      
+
 
 
     function simpandinas() {//simpan jalan

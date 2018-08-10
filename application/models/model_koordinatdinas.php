@@ -17,7 +17,7 @@ class Model_koordinatdinas extends CI_Model {
     }
     public function getbyiddinas($id){
         $this->db->where('id_dinas', $id);
-        $query = $this->db->get('tbl_koordinatdinas');
+        $query = $this->db->get('tbl_dinas');
         return $query;
     }
     public function read($id){

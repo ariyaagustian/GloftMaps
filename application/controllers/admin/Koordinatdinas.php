@@ -26,6 +26,23 @@ class Koordinatdinas extends CI_Controller
 
   }
 
+  function viewmarkerdinas(){
+        if (!$this->input->is_ajax_request()) {
+            show_404();
+        }else{
+            if ($this->model_koordinatdinas->getbyiddinas($this->input->post('id_dinas'))->num_rows()!=null){
+                $status = 'success';
+                $msg = $this->model_koordinatdinas->getbyiddinas($this->input->post('id_dinas'))->result();
+                $datadinas = $this->model_koordinatdinas->read($this->input->post('id_dinas'))->result();
+            }else{
+                $status = 'error';
+                $msg = 'data tidak ditemukan';
+                $datadinas = null;
+            }
+            $this->output->set_content_type('application/json')->set_output(json_encode(array('status'=>$status,'msg'=>$msg,'datadinas'=>$datadinas)));
+        }
+    }
+
 
   function create(){
           if (!$this->input->is_ajax_request()) {
