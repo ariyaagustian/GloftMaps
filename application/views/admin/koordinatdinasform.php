@@ -21,7 +21,7 @@
                             <th>No</th>
                             <th>Data dinas</th>
                             <th>Alamat</th>
-                            <th>Latitude</th>
+                            <th>Jarak</th>
                             <th>Longitude</th>
                             <th></th>
                         </thead>
@@ -35,7 +35,14 @@
                                         <td><?php echo $no;?></td>
                                         <td><?php echo $dinas->kelembagaan;?></td>
                                         <td><?php echo $dinas->alamat;?></td>
-                                        <td><?php echo $dinas->latitude;?></td>
+                                        <td><?php
+                                        $latitude1 = -6.983354;
+                                        $longitude1 = 107.632154;
+                                        $dataJson = file_get_contents("https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=".$latitude1.",".$longitude1."&destinations=".$dinas->latitude.",".$dinas->longitude."&key=%20AIzaSyCWpwVwu1hO6TJW1H8x_zlhrLfbSbQ2r3o");
+                                        $data = json_decode($dataJson,true);
+                                        $nilaiJarak = $data['rows'][0]['elements'][0]['distance']['text'];
+                                        echo $nilaiJarak;
+                                        ?></td>
                                         <td><?php echo $dinas->longitude;?></td>
                                         <td>
                                             <button class="btn-info btn btn-sm" id="viewmarkerdinas" data-iddatadinas=<?php echo $dinas->id_dinas?>><span class="glyphicon glyphicon-eye-open"></span></button>
@@ -84,7 +91,12 @@ new $.fn.dataTable.FixedHeader( table );
         };
 
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
+        var label = 'Gloftech';
+        var markerKantor = new google.maps.Marker({
+            position: new google.maps.LatLng(-6.984034, 107.632257),
+            map: map,
+            label: label
+        });
         // Add a listener for the click event
         // google.maps.event.addListener(map, 'rightclick', addLatLng);
         // google.maps.event.addListener(map, "rightclick", function(event) {
