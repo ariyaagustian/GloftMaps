@@ -22,7 +22,7 @@
                             <th>Data dinas</th>
                             <th>Alamat</th>
                             <th>Jarak</th>
-                            <th>Longitude</th>
+                            <th>Status</th>
                             <th></th>
                         </thead>
                         <tbody id="daftarkoordinatdinas">
@@ -33,7 +33,7 @@
                                     ?>
                                     <tr>
                                         <td><?php echo $no;?></td>
-                                        <td><?php echo $dinas->kelembagaan;?></td>
+                                        <td><?php echo $dinas->kelembagaan." - ".$dinas->wilayah;?></td>
                                         <td><?php echo $dinas->alamat;?></td>
                                         <td><?php
                                         $latitude1 = -6.983354;
@@ -43,10 +43,13 @@
                                         $nilaiJarak = $data['rows'][0]['elements'][0]['distance']['text'];
                                         echo $nilaiJarak;
                                         ?></td>
-                                        <td><?php echo $dinas->longitude;?></td>
+                                        <td></td>
                                         <td>
-                                            <button class="btn-info btn btn-sm" id="viewmarkerdinas" data-iddatadinas=<?php echo $dinas->id_dinas?>><span class="glyphicon glyphicon-eye-open"></span></button>
-                                            <button class="btn-danger btn btn-sm" id="hapusmarkerdinas" data-iddatadinas=<?php echo $dinas->id_dinas?>><span class="glyphicon glyphicon-eye-close"></span></button>
+                                            <button class="btn-info btn btn-sm" id="viewmarkerdinas" data-iddatadinas=<?php echo $dinas->id_dinas?>><span class="glyphicon glyphicon-eye-open"></span> Check</button>
+                                            <br>
+                                            <button class="btn-danger btn btn-sm" id="hapusmarkerdinas" data-iddatadinas=<?php echo $dinas->id_dinas?>><span class="glyphicon glyphicon-eye-close"></span> Uncheck</button>
+                                            <br>
+                                            <button class="btn-success btn btn-sm" id="gantistatusdinas" data-iddatadinas=<?php echo $dinas->id_dinas?>><span class="glyphicon glyphicon-cog"></span> Done</button>
                                         </td>
                                     </tr>
                                     <?php
