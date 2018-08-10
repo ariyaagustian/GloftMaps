@@ -1,4 +1,4 @@
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&key=AIzaSyCXx-VS9x3x47zG9IBFgvdqUSs0WOL972k">
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCXx-VS9x3x47zG9IBFgvdqUSs0WOL972k">
 </script>
 
 
@@ -39,7 +39,7 @@
                                         <td><?php echo $dinas->longitude;?></td>
                                         <td>
                                             <button class="btn-info btn btn-sm" id="viewmarkerdinas" data-iddatadinas=<?php echo $dinas->id_dinas?>><span class="glyphicon glyphicon-eye-open"></span></button>
-                                            <button class="btn-danger btn btn-sm" id="hapusmarkerdinas" data-iddatadinas=<?php $dinas->id_dinas?>><span class="glyphicon glyphicon-eye-close"></span></button>
+                                            <button class="btn-danger btn btn-sm" id="hapusmarkerdinas" data-iddatadinas=<?php echo $dinas->id_dinas?>><span class="glyphicon glyphicon-eye-close"></span></button>
                                         </td>
                                     </tr>
                                     <?php
@@ -61,7 +61,6 @@
 
 <script>
 $(document).on('click','#clearmap',clearmap)
-.on('click','#simpandaftarkoordinatdinas',simpandaftarkoordinatdinas)
 .on('click','#hapusmarkerdinas',hapusmarkerdinas)
 .on('click','#viewmarkerdinas',viewmarkerdinas);
 
@@ -102,6 +101,7 @@ new $.fn.dataTable.FixedHeader( table );
      * @param {google.maps.MouseEvent} event
      */
     var marker;
+    var markers = [];
     function addLatLng(event) {
       if (marker) {
         marker.setPosition(event.latLng);
@@ -130,63 +130,41 @@ new $.fn.dataTable.FixedHeader( table );
     }
     //end buat hapus marker
     // Menampilkan marker lokasi dinas
-    function addMarker(nama,location) {
+    function addMarker(id,location,ket) {
+      var infowindow = new google.maps.InfoWindow({
+          content: ket,
+          maxWidth: 200
+        });
+
         var marker = new google.maps.Marker({
             position: location,
-            map: map,
-            title : nama
+            map: map
         });
+
+        marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
+
+        marker.id = id;
         markers.push(marker);
     }
 
     google.maps.event.addDomListener(window, 'load', initialize);
 
-    function simpandaftarkoordinatdinas(e){
-        e.preventDefault();
-        var datakoordinat = {'id_dinas':$('#id_dinas').val(),'latitude':$('#latitude').val(),'longitude':$('#longitude').val()};
-        console.log(datakoordinat);
-        $.ajax({
-            url : '<?php echo site_url("admin/koordinatdinas/create") ?>',
-            dataType : 'json',
-            data : datakoordinat,
-            type : 'POST',
-            success : function(data,status){
-                if (data.status!='error') {
-                    $('#daftarkoordinatdinas').load('<?php echo current_url()."/ #daftarkoordinatdinas > *" ?>');
-                    alert(data.msg);
-                    clearmap(e);
-                }else{
-                    alert(data.msg);
-                }
-            }
-        })
-    }
-    function hapusmarkerdinas(e){
-        e.preventDefault();
+    function hapusmarkerdinas(){
         var id = $(this).data('iddatadinas');
-        var datamarker = {'id_dinas':id};
-        console.log(datamarker);
-        clearmap(e);
+        for (var i = 0; i < markers.length; i++) {
+          if (markers[i].id == id) {
+            markers[i].setMap(null);
+            //Hapus DAri Array
+             markers.splice(i, 1);
+          }
+        }
 
-        // $.ajax({
-        //     url : '<?php echo site_url("admin/koordinatdinas/hapusmarkerdinas") ?>',
-        //     data : datakoordinat,
-        //     dataType : 'json',
-        //     type : 'POST',
-        //     success : function(data,status){
-        //         if (data.status!='error') {
-        //             alert(data.msg);
-        //             $('#daftarkoordinatdinas').load('<?php echo current_url()."/ #daftarkoordinatdinas > *" ?>');
-        //         }else{
-        //             alert(data.msg);
-        //         }
-        //     }
-        // })
     }
     function viewmarkerdinas(){
         var id = $(this).data('iddatadinas');
         var datamarker = {'id_dinas':id};
-        console.log(datamarker);
         $.ajax({
             url : '<?php echo site_url("admin/koordinatdinas/viewmarkerdinas") ?>',
             data : datamarker,
@@ -197,8 +175,7 @@ new $.fn.dataTable.FixedHeader( table );
                     //load marker
                     $.each(data.msg,function(k,v){
                         var myLatLng = {lat: parseFloat(v['latitude']), lng: parseFloat(v['longitude'])};
-                        console.log(k,v);
-                        addMarker((v['id_dinas']),myLatLng);
+                        addMarker((v['id_dinas']),myLatLng,"<b>"+v['kelembagaan']+", "+v['wilayah']+"</b> <br><br>"+v['alamat'] );
                     })
                     //end load marker
                 }else{

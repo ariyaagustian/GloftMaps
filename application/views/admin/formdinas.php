@@ -158,6 +158,7 @@
 
     marker.setVisible(false);
     var place = autocomplete.getPlace();
+    var alamat = place.formatted_address;
     var lat = place.geometry.location.lat();
     var long = place.geometry.location.lng();
     $('#latitude').val(lat);
@@ -177,105 +178,12 @@
 
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);
+    $("#alamat").val(alamat);
   });
 
 }
 
 initMap();
-
-// var marker;
-//     function addLatLng(event) {
-//       if (marker) {
-//         marker.setPosition(event.latLng);
-//       } else {
-//         marker = new google.maps.Marker({
-//           position: event.latLng,
-//           title: 'GloftMaps',
-//           map: map
-//           });
-//       }
-//     }
-
-//     var map;
-//     var markers = [];
-
-//     function initialize() {
-//         var mapOptions = {
-//         zoom: 17,
-//         // Center di kantor
-//         center: new google.maps.LatLng(-6.984034, 107.632257)
-//         };
-
-//         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
-//         // Add a listener for the click event
-//         google.maps.event.addListener(map, 'rightclick', addLatLng);
-//         google.maps.event.addListener(map, "rightclick", function(event) {
-//           var lat = event.latLng.lat();
-//           var lng = event.latLng.lng();
-//           $('#latitude').val(lat);
-//           $('#longitude').val(lng);
-
-//         });
-//     }
-
-//     /**
-//      * Handles click events on a map, and adds a new point to the marker.
-//      * @param {google.maps.MouseEvent} event
-//      */
-//     var marker;
-//     function addLatLng(event) {
-//       if (marker) {
-//         marker.setPosition(event.latLng);
-//       } else {
-//         marker = new google.maps.Marker({
-//           position: event.latLng,
-//           title: 'GloftMaps',
-//           map: map
-//           });
-//       }
-
-//     }
-
-//     google.maps.event.addDomListener(window, 'load', initialize);
-
-//    /*END OF MAPS*/
-// // get lat long
-//       $(document).ready(function() {
-//         var marker = new google.maps.Marker({
-//           map: map
-//         });
-//           var autocomplete = new google.maps.places.Autocomplete($("#alamat")[0]);
-//           google.maps.event.addListener(autocomplete, 'place_changed', function() {
-//             var place = autocomplete.getPlace();
-//             //var location = place.formatted_address;
-//             var lat = place.geometry.location.lat();
-//             var long = place.geometry.location.lng();
-//             $('#latitude').val(lat);
-//             $('#longitude').val(long);
-
-//             //marker.setVisible(false);
-
-//             if (!place.geometry) {
-//               window.alert("Autocomplete's returned place contains no geometry");
-//               return;
-//             }
-
-//             // If the place has a geometry, then present it on a map.
-//             if (place.geometry.viewport) {
-//               map.fitBounds(place.geometry.viewport);
-//             } else {
-//               map.setCenter(place.geometry.location);
-//               map.setZoom(17); // Why 17? Because it looks good.
-//             }
-
-//             marker.setPosition(place.geometry.location);
-//             marker.setVisible(true);
-//           });
-//       });
-
-
-
 
     function simpandinas() {//simpan jalan
         var datadinas = {
