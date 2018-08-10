@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 08, 2018 at 08:56 AM
+-- Generation Time: Aug 10, 2018 at 02:06 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.1
 
@@ -66,9 +66,9 @@ CREATE TABLE `tbl_dinas` (
   `kelembagaan` varchar(120) CHARACTER SET latin1 DEFAULT NULL,
   `wilayah` varchar(120) CHARACTER SET latin1 DEFAULT NULL,
   `pimpinan` varchar(120) CHARACTER SET latin1 DEFAULT NULL,
-  `alamat` varchar(120) CHARACTER SET latin1 DEFAULT NULL,
-  `latitude` float NOT NULL,
-  `longitude` float NOT NULL,
+  `alamat` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `latitude` varchar(255) NOT NULL,
+  `longitude` varchar(255) NOT NULL,
   `telepon` text CHARACTER SET latin1,
   `fax` text CHARACTER SET latin1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -78,20 +78,11 @@ CREATE TABLE `tbl_dinas` (
 --
 
 INSERT INTO `tbl_dinas` (`id_dinas`, `kelembagaan`, `wilayah`, `pimpinan`, `alamat`, `latitude`, `longitude`, `telepon`, `fax`) VALUES
-(1, 'Badan Kepegawaian, Pendidikan dan Pelatihan', 'Kota Bandung', 'dr. H. Gunadi Sukma Bhinekas, M.kes', 'Jl. Wastukencana No. 2', 0, 0, '(022) 4206190', '(022) 4206190');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tbl_koordinatdinas`
---
-
-CREATE TABLE `tbl_koordinatdinas` (
-  `id_koordinatdinas` int(11) NOT NULL,
-  `id_dinas` int(11) DEFAULT NULL,
-  `latitude` varchar(24) CHARACTER SET latin1 DEFAULT NULL,
-  `longitude` varchar(24) CHARACTER SET latin1 DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+(1, 'Badan Kepegawaian, Pendidikan dan Pelatihan', 'Kota Bandung', 'dr. H. Gunadi Sukma Bhinekas, M.kes', 'Jl. Wastukancana No.2, Babakan Ciamis, Sumur Bandung, Kota Bandung, Jawa Barat 40117, Indonesia', '-6.9131977', '107.60900859999992', '(022) 4206190', '(022) 4206190'),
+(2, 'Dinas Kebakaran dan Penanggulangan Bencana', 'Kota Bandung', 'Entol Akhmad Ferdi Ligaswara, S.H. MH.', 'Jl. Sukabumi No.17, Kacapiring, Batununggal, Kota Bandung, Jawa Barat 40271, Indonesia', '-6.916824', '107.63410799999997', '022-7207113', '-'),
+(3, 'Dinas Kebudayaan dan Pariwisata', 'Kota Bandung', 'Dra.Dewi Kaniasari,MA.', 'Jl. Jendral Ahmad Yani No.227, Kacapiring, Sumur Bandung, Kota Bandung, Jawa Barat 40113, Indonesia', '-6.9169168', '107.62759260000007', '(022)7271724', '-'),
+(4, 'Dinas Kependudukan dan Pencatatan Sipil', 'Kota Bandung', 'Dra. Popong Warliati Nuraeni, M.MPd', 'Jl. Ambon No.1, Citarum, Bandung Wetan, Kota Bandung, Jawa Barat 40115, Indonesia', '-6.9087768', '107.61384980000003', '(022) 4209891', '-'),
+(5, 'Rumah Sakit Khusus Ibu dan Anak', 'Kota Bandung', 'dr. Taat Tagore Diah R. , MKKK', 'Jl. Astanaanyar No.224, Nyengseret, Astanaanyar, Kota Bandung, Jawa Barat 40242, Indonesia', '-6.9292601', '107.60046020000004', '-', '-');
 
 -- --------------------------------------------------------
 
@@ -158,7 +149,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
 (1, '127.0.0.1', 'administrator', '$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36', '', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1533661304, 1, 'Admin', 'istrator', 'ADMIN', '0'),
 (3, '::1', NULL, '$2y$08$kzDOqL2cOJ3XdFC5jx1Fduz5OrGA6Xi9w5GIVzF.LkJjt4rYVcc9C', NULL, 'admin@gmail.com', NULL, NULL, NULL, NULL, 1533662161, 1533662170, 1, 'admin', 'admin', NULL, '08989239'),
-(5, '::1', NULL, '$2y$08$ut.uckm1ect9ZZrVOhsLXu0z/Lq2Q/1YBkMSpmU3nYmDELV/EuWlC', NULL, 'ariyaagustian@gmail.com', NULL, NULL, NULL, NULL, 1533662519, 1533709545, 1, 'Ariya', 'Agustian', NULL, '082191987858'),
+(5, '::1', NULL, '$2y$08$ut.uckm1ect9ZZrVOhsLXu0z/Lq2Q/1YBkMSpmU3nYmDELV/EuWlC', NULL, 'ariyaagustian@gmail.com', NULL, NULL, NULL, NULL, 1533662519, 1533890715, 1, 'Ariya', 'Agustian', NULL, '082191987858'),
 (6, '::1', NULL, '$2y$08$Mlu/HBAot5MpCvnECYjn6O9HZF8msXZv41sb0ftQwuHdXtmXja0QS', NULL, 'member@email.com', NULL, NULL, NULL, NULL, 1533662660, 1533662675, 1, 'member', 'member', NULL, '023889'),
 (7, '::1', NULL, '$2y$08$G/aXMaFYDw.X8sdU00wgduGyjXq9OFO.4JFYXlNjnJFwS1ks7lVN.', NULL, 'admin@email.com', NULL, NULL, NULL, NULL, 1533662726, 1533662733, 1, 'admin', 'admin', NULL, '023889');
 
@@ -209,13 +200,6 @@ ALTER TABLE `tbl_dinas`
   ADD PRIMARY KEY (`id_dinas`);
 
 --
--- Indexes for table `tbl_koordinatdinas`
---
-ALTER TABLE `tbl_koordinatdinas`
-  ADD PRIMARY KEY (`id_koordinatdinas`),
-  ADD KEY `id_dinas` (`id_dinas`) USING BTREE;
-
---
 -- Indexes for table `tbl_sessions`
 --
 ALTER TABLE `tbl_sessions`
@@ -262,13 +246,7 @@ ALTER TABLE `login_attempts`
 -- AUTO_INCREMENT for table `tbl_dinas`
 --
 ALTER TABLE `tbl_dinas`
-  MODIFY `id_dinas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `tbl_koordinatdinas`
---
-ALTER TABLE `tbl_koordinatdinas`
-  MODIFY `id_koordinatdinas` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_dinas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
@@ -291,12 +269,6 @@ ALTER TABLE `users_groups`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `tbl_koordinatdinas`
---
-ALTER TABLE `tbl_koordinatdinas`
-  ADD CONSTRAINT `tbl_koordinatdinas_ibfk_1` FOREIGN KEY (`id_dinas`) REFERENCES `tbl_dinas` (`id_dinas`);
 
 --
 -- Constraints for table `users_groups`
