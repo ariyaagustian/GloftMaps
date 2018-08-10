@@ -1,17 +1,16 @@
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true">
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true&key=AIzaSyCXx-VS9x3x47zG9IBFgvdqUSs0WOL972k">
 </script>
 
 
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-sm-8">
+        
             <div class="panel panel-primary">
                 <div class="panel-heading"><span class="glyphicon glyphicon-globe"></span> Peta</div>
-                <div class="panel-body" style="height:300px;" id="map-canvas">
-                </div>
+                <div class="panel-body" style="height:500px;" id="map-canvas">
             </div>
         </div>
-        <div class="col-md-4 col-sm-4">
+        <!-- <div class="col-md-4 col-sm-4">
             <div class="panel panel-primary">
                 <div class="panel-heading"><span class="glyphicon glyphicon-list"></span> Daftar Koordinat</div>
                 <div class="panel-body" style="min-height:300px;">
@@ -49,20 +48,23 @@
                     </form>
                 </div>
             </div>
-        </div>
-        <div class="col-md-12 col-sm-12">
+        </div> -->
+        
             <div class="panel panel-primary">
-                <div class="panel-heading"><span class="glyphicon glyphicon-th-list"></span> Daftar Koordinat marker Data dinas</div>
+                <div class="panel-heading"><span class="glyphicon glyphicon-th-list">
+                    </span> Daftar Koordinat marker Data dinas
+                </div>
                 <div class="panel-body" style="min-height:400px">
-                    <table class="table">
+                <div class="table-responsive">
+                    <table id="DataTable" class="table table-bordered " style="width:100%">
                         <th>No</th>
                         <th>Data dinas</th>
                         <th>Latitude</th>
                         <th>Longitude</th>
-                        <th></th>
+                        <th>Action</th>
                         <tbody id="daftarkoordinatdinas">
                             <?php
-                            if ($itemkoordinatdinas->num_rows()!=null) {
+                            if ($itemdinas->num_rows()!=null) {
                                 $no = 1;
                                 foreach ($itemdinas->result() as $dinas) {
                                     echo "<tr>";
@@ -73,14 +75,14 @@
                                     echo $dinas->kelembagaan;
                                     echo "</td>";
                                     echo "<td>";
-                                    foreach ($itemkoordinatdinas->result() as $koordinat) {
+                                    foreach ($itemdinas->result() as $koordinat) {
                                         if ($koordinat->id_dinas==$dinas->id_dinas) {
                                             echo $koordinat->latitude."</br>";
                                         }
                                     }
                                     echo "</td>";
                                     echo "<td>";
-                                    foreach ($itemkoordinatdinas->result() as $koordinat) {
+                                    foreach ($itemdinas->result() as $koordinat) {
                                         if ($koordinat->id_dinas==$dinas->id_dinas) {
                                             echo $koordinat->longitude."</br>";
                                         }
@@ -97,11 +99,18 @@
                         </tbody>
                     </table>
                 </div>
+                </div>
             </div>
-        </div>
+        
     </div>
 </div>
 
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
 
 <!--script google map-->
 
@@ -115,7 +124,7 @@ $(document).on('click','#clearmap',clearmap)
 
     function initialize() {
         var mapOptions = {
-        zoom: 14,
+        zoom: 17,
         // Center di kantor
         center: new google.maps.LatLng(-6.984034, 107.632257)
         };

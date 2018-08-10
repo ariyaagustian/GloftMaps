@@ -27,12 +27,24 @@
                       </div>
                       <div class="form-group">
                         <label for="alamat">Alamat</label>
-                        <textarea name="alamat" class="form-control" id="alamat"></textarea>
+                        <input name="alamat" class="form-control" id="alamat"> </input>
+                      </div>
+                      <div class="form-group">
+                          <div class="panel panel-primary">
+                            <div class="panel-body" style="height:300px;" id="map-canvas">
+                          </div>
+                        </div>
                       </div>
                       <div class="form-group">
                         <label for="koordinat">Koordinat</label>
-                        <input type="text" class="form-control" id="latitude" placeholder="lat">
-                        <input type="text" class="form-control" id="longitude" placeholder="lng">
+                        <div class="row"> 
+                            <div class="col-md-6 col-sm-6">
+                                <input type="text" class="form-control" id="latitude" placeholder="latitude" disabled="true">
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <input type="text" class="form-control" id="longitude" placeholder="longitude" disabled="true">
+                            </div>
+                        </div>
                       </div>
                       <div class="form-group">
                         <label for="telepon">Telepon</label>
@@ -66,7 +78,7 @@
                       <th>Alamat</th>
                       <th>Telepon</th>
                       <th>Fax</th>
-                      <th></th>
+                      <th>Action</th>
                     </thead>
                       <tbody id="daftardinas">
                           <?php
@@ -99,6 +111,8 @@
 </div>
 
 
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyCXx-VS9x3x47zG9IBFgvdqUSs0WOL972k"></script>
+
 <script>
     $(document).on('click','#simpandinas',simpandinas)
     .on('click','#resetdinas',resetdinas)
@@ -116,6 +130,151 @@
 } );
 
 
+   /*MAPS*/
+
+   function initMap() {
+
+  var mapOptions = {
+        zoom: 17,
+        // Center di kantor
+        center: new google.maps.LatLng(-6.984034, 107.632257)
+        };
+
+        map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+  var input = /** @type {!HTMLInputElement} */ (
+    document.getElementById('alamat'));
+
+  //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+  var autocomplete = new google.maps.places.Autocomplete(input);
+
+  var marker = new google.maps.Marker({
+    map: map,
+    anchorPoint: new google.maps.Point(0, -29)
+  });
+
+  autocomplete.addListener('place_changed', function() {
+
+    marker.setVisible(false);
+    var place = autocomplete.getPlace();
+    var lat = place.geometry.location.lat();
+    var long = place.geometry.location.lng();
+    $('#latitude').val(lat);
+    $('#longitude').val(long);
+    if (!place.geometry) {
+      window.alert("Autocomplete's returned place contains no geometry");
+      return;
+    }
+
+    // If the place has a geometry, then present it on a map.
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
+    } else {
+      map.setCenter(place.geometry.location);
+      map.setZoom(17); // Why 17? Because it looks good.
+    }
+
+    marker.setPosition(place.geometry.location);
+    marker.setVisible(true);
+  });
+
+}
+
+initMap();
+
+// var marker;
+//     function addLatLng(event) {
+//       if (marker) {
+//         marker.setPosition(event.latLng);
+//       } else {
+//         marker = new google.maps.Marker({
+//           position: event.latLng,
+//           title: 'GloftMaps',
+//           map: map
+//           });
+//       }
+//     }
+
+//     var map;
+//     var markers = [];
+
+//     function initialize() {
+//         var mapOptions = {
+//         zoom: 17,
+//         // Center di kantor
+//         center: new google.maps.LatLng(-6.984034, 107.632257)
+//         };
+
+//         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+//         // Add a listener for the click event
+//         google.maps.event.addListener(map, 'rightclick', addLatLng);
+//         google.maps.event.addListener(map, "rightclick", function(event) {
+//           var lat = event.latLng.lat();
+//           var lng = event.latLng.lng();
+//           $('#latitude').val(lat);
+//           $('#longitude').val(lng);
+          
+//         });
+//     }
+
+//     /**
+//      * Handles click events on a map, and adds a new point to the marker.
+//      * @param {google.maps.MouseEvent} event
+//      */
+//     var marker;
+//     function addLatLng(event) {
+//       if (marker) {
+//         marker.setPosition(event.latLng);
+//       } else {
+//         marker = new google.maps.Marker({
+//           position: event.latLng,
+//           title: 'GloftMaps',
+//           map: map
+//           });
+//       }
+
+//     }
+
+//     google.maps.event.addDomListener(window, 'load', initialize);
+
+//    /*END OF MAPS*/
+// // get lat long
+//       $(document).ready(function() {
+//         var marker = new google.maps.Marker({
+//           map: map
+//         });
+//           var autocomplete = new google.maps.places.Autocomplete($("#alamat")[0]);
+//           google.maps.event.addListener(autocomplete, 'place_changed', function() {
+//             var place = autocomplete.getPlace();
+//             //var location = place.formatted_address;
+//             var lat = place.geometry.location.lat();
+//             var long = place.geometry.location.lng();
+//             $('#latitude').val(lat);
+//             $('#longitude').val(long);
+
+//             //marker.setVisible(false);
+
+//             if (!place.geometry) {
+//               window.alert("Autocomplete's returned place contains no geometry");
+//               return;
+//             }
+
+//             // If the place has a geometry, then present it on a map.
+//             if (place.geometry.viewport) {
+//               map.fitBounds(place.geometry.viewport);
+//             } else {
+//               map.setCenter(place.geometry.location);
+//               map.setZoom(17); // Why 17? Because it looks good.
+//             }
+
+//             marker.setPosition(place.geometry.location);
+//             marker.setVisible(true);
+//           });    
+//       });
+
+      
 
 
     function simpandinas() {//simpan jalan

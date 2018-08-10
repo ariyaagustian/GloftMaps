@@ -32,6 +32,7 @@
                         <input type="password" class="form-control" id="password" name="password" placeholder="password">
                       </div>
                       <div class="form-group">
+                        <label for="password">Hak Akses</label>
                         <select class="form-control" name="group" id="group">
                           <option value="1">Admin</option>
                           <option value="2">Member</option>
