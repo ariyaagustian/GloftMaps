@@ -21,6 +21,10 @@ class Model_dinas extends CI_Model{
         $query = $this->db->get('tbl_dinas');
         return $query;
     }
+    public function getbyStatus(){
+        $query = $this->db->get_where('tbl_dinas', array('status' => '0'));
+        return $query;
+    }
     public function read($id){
         $this->db->where('id_dinas', $id);
         $query = $this->db->get('tbl_dinas');

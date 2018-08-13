@@ -47,6 +47,8 @@
                                           <?php
                                             if ($dinas->status == 0) {
                                               echo "Belum Dikunjungi";
+                                            } else {
+                                              
                                             }
                                           ?>
                                         </td>

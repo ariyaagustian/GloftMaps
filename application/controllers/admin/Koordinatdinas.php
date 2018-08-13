@@ -19,7 +19,7 @@ class Koordinatdinas extends CI_Controller
   function index()
   {
     $data = array('content' => 'admin/koordinatdinasform',
-    'itemdinas' => $this->model_dinas->getAll(),
+    'itemdinas' => $this->model_dinas->getbyStatus(),
     'itemkoordinatdinas' => $this->model_koordinatdinas->getAll()
   );
     $this->load->view('templates/template-admin', $data);
