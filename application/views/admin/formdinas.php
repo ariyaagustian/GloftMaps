@@ -44,6 +44,9 @@
                             <div class="col-md-6 col-sm-6">
                                 <input type="text" class="form-control" id="longitude" placeholder="longitude" disabled="true">
                             </div>
+                            <div class="col-md-12 col-sm-12">
+                                <input type="text" class="form-control" id="jarak" placeholder="jarak" disabled="true">
+                            </div>
                         </div>
                       </div>
                       <div class="form-group">
@@ -55,9 +58,9 @@
                         <input type="text" class="form-control" id="fax" placeholder="">
                       </div>
                       <div class="form-group">
-                        <button type="button" name="simpandinas" id="simpandinas" class="btn btn-primary">Simpan</button>
+                        <button type="button" name="simpandinas" id="simpandinas" onclick='window.location.reload();' class="btn btn-primary">Simpan</button>
                         <button type="button" name="resetdinas"  id="resetdinas" class="btn btn-warning">Reset</button>
-                        <button type="button" name="updatedinas" id="updatedinas" class="btn btn-info" disabled="true">Update</button>
+                        <button type="button" name="updatedinas" id="updatedinas" class="btn btn-info" onclick='window.location.reload();' disabled="true">Update</button>
                       </div>
                   </form>
               </div>
@@ -94,7 +97,7 @@
                                   <td><?php echo $dinas->telepon;?></td>
                                   <td><?php echo $dinas->fax;?></td>
                                   <td>
-                                      <button type="button" class="btn btn-sm btn-info" data-iddinas="<?php echo $dinas->id_dinas;?>" name="editdinas<?php echo $dinas->id_dinas;?>" id="editdinas"><span class="glyphicon glyphicon-edit"></span></button>
+                                      <button type="button" class="btn btn-sm btn-info" data-iddinas="<?php echo $dinas->id_dinas;?>" name="editdinas<?php echo $dinas->id_dinas;?>" id="editdinas" ><span class="glyphicon glyphicon-edit"></span></button>
                                       <button type="button" class="btn btn-sm btn-danger" data-iddinas="<?php echo $dinas->id_dinas;?>" name="deletedinas<?php echo $dinas->id_dinas;?>" id="deletedinas"><span class="glyphicon glyphicon-trash"></span></button>
                                   </td>
                               </tr>
@@ -125,6 +128,7 @@
         responsive: true,
         "lengthMenu": [ 5, 10, 25, 50, 75, 100 ]
     } );
+
 
     new $.fn.dataTable.FixedHeader( table );
 } );
@@ -179,6 +183,7 @@
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);
     $("#alamat").val(alamat);
+
   });
 
 }
@@ -193,11 +198,11 @@ initMap();
           'alamat':$('#alamat').val(),
           'latitude':$('#latitude').val(),
           'longitude':$('#longitude').val(),
+          'jarak':$('#jarak').val(),
           'telepon':$('#telepon').val(),
           'fax':$('#fax').val()
         };
 
-        console.log(datadinas);
         $.ajax({
             url : '<?php echo site_url("admin/dinas/create");?>',
             data : datadinas,
@@ -278,7 +283,7 @@ initMap();
         'telepon':$('#telepon').val(),
         'fax':$('#fax').val(),
         'id_dinas':$('#id_dinas').val()
-      };console.log(datadinas);
+      };
         $.ajax({
             url : '<?php echo site_url("admin/dinas/update");?>',
             data : datadinas,
@@ -303,7 +308,6 @@ initMap();
         if (confirm("Anda yakin akan menghapus data Dinas ini?")) {
             var id = $(this).data('iddinas');
             var datadinas = {'id_dinas':id};
-            console.log(datadinas);
             $.ajax({
                 url : '<?php echo site_url("admin/dinas/delete");?>',
                 data : datadinas,

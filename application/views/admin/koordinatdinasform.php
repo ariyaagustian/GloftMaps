@@ -47,8 +47,6 @@
                                           <?php
                                             if ($dinas->status == 0) {
                                               echo "Belum Dikunjungi";
-                                            } else {
-                                              
                                             }
                                           ?>
                                         </td>
@@ -78,6 +76,7 @@
 <script>
 $(document).on('click','#clearmap',clearmap)
 .on('click','#hapusmarkerdinas',hapusmarkerdinas)
+.on('click','#gantistatusdinas',gantistatusdinas)
 .on('click','#viewmarkerdinas',viewmarkerdinas);
 
 $(document).ready(function() {
