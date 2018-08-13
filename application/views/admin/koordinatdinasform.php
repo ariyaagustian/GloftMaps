@@ -43,7 +43,13 @@
                                         $nilaiJarak = $data['rows'][0]['elements'][0]['distance']['text'];
                                         echo floatval($nilaiJarak);
                                         ?></td>
-                                        <td>#</td>
+                                        <td>
+                                          <?php
+                                            if ($dinas->status == 0) {
+                                              echo "Belum Dikunjungi";
+                                            }
+                                          ?>
+                                        </td>
                                         <td>
                                             <button class="btn-info btn btn-sm" id="viewmarkerdinas" data-iddatadinas=<?php echo $dinas->id_dinas?>><span class="glyphicon glyphicon-eye-open"></span> Check</button>
                                             <button class="btn-danger btn btn-sm" id="hapusmarkerdinas" data-iddatadinas=<?php echo $dinas->id_dinas?>><span class="glyphicon glyphicon-eye-close"></span> Uncheck</button>
