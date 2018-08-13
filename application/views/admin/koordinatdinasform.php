@@ -21,7 +21,7 @@
                             <th>No</th>
                             <th>Data dinas</th>
                             <th>Alamat</th>
-                            <th>Jarak</th>
+                            <th>Jarak (KM)</th>
                             <th>Status</th>
                             <th></th>
                         </thead>
@@ -41,7 +41,7 @@
                                         $dataJson = file_get_contents("https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=".$latitude1.",".$longitude1."&destinations=".$dinas->latitude.",".$dinas->longitude."&key=%20AIzaSyCWpwVwu1hO6TJW1H8x_zlhrLfbSbQ2r3o");
                                         $data = json_decode($dataJson,true);
                                         $nilaiJarak = $data['rows'][0]['elements'][0]['distance']['text'];
-                                        echo $nilaiJarak;
+                                        echo floatval($nilaiJarak);
                                         ?></td>
                                         <td>#</td>
                                         <td>
@@ -52,6 +52,7 @@
                                     </tr>
                                     <?php
                                     $no++;
+
                                 }
                             }
                             ?>
@@ -59,7 +60,6 @@
                     </table>
                 </div>
             </div>
-
     </div>
 </div>
 
@@ -75,7 +75,8 @@ $(document).on('click','#clearmap',clearmap)
 $(document).ready(function() {
 var table = $('#DataTable').DataTable( {
     responsive: true,
-    "lengthMenu": [ 5, 10, 25, 50, 75, 100 ]
+    "lengthMenu": [ 5, 10, 25, 50, 75, 100 ],
+    "order": [["3","asc"]]
 } );
 
 new $.fn.dataTable.FixedHeader( table );
