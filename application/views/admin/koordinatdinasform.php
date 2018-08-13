@@ -99,11 +99,12 @@ new $.fn.dataTable.FixedHeader( table );
         };
 
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        var image = 'https://gloftech.co.id/assets/favicon.ico';
         var label = 'Gloftech';
         var markerKantor = new google.maps.Marker({
             position: new google.maps.LatLng(-6.984034, 107.632257),
             map: map,
-            label: label
+            icon: image
         });
         // Add a listener for the click event
         // google.maps.event.addListener(map, 'rightclick', addLatLng);
