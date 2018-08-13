@@ -1,5 +1,51 @@
 <div class="container-fluid">
     <div class="row">
+
+        <div class="col-md-8 col-sm-8">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title"><span class="glyphicon glyphicon-list"></span> Daftar Dinas</h3>
+              </div>
+              <div class="panel-body">
+                  <table id="DataTable" class="table table-bordered " style="width:100%">
+                    <thead>
+                      <th>No</th>
+                      <th>Nama Kelembagaan</th>
+                      <th>Wilayah</th>
+                      <th>Pimpinan</th>
+                      <th>Alamat</th>
+                      <th>Telepon</th>
+                      <th>Fax</th>
+                      <th>Action</th>
+                    </thead>
+                      <tbody id="daftardinas">
+                          <?php
+                          $no = 1;
+                          foreach ($itemdinas->result() as $dinas) {
+                              ?>
+                              <tr>
+                                  <td><?php echo $no;?></td>
+                                  <td><?php echo $dinas->kelembagaan;?></td>
+                                  <td><?php echo $dinas->wilayah;?></td>
+                                  <td><?php echo $dinas->pimpinan;?></td>
+                                  <td><?php echo $dinas->alamat;?></td>
+                                  <td><?php echo $dinas->telepon;?></td>
+                                  <td><?php echo $dinas->fax;?></td>
+                                  <td>
+                                      <button type="button" class="btn btn-sm btn-info" data-iddinas="<?php echo $dinas->id_dinas;?>" name="editdinas<?php echo $dinas->id_dinas;?>" id="editdinas" ><span class="glyphicon glyphicon-edit"></span></button>
+                                      <button type="button" class="btn btn-sm btn-danger" data-iddinas="<?php echo $dinas->id_dinas;?>" name="deletedinas<?php echo $dinas->id_dinas;?>" id="deletedinas" ><span class="glyphicon glyphicon-trash"></span></button>
+                                  </td>
+                              </tr>
+                              <?php
+                              $no++;
+                          }
+                           ?>
+                      </tbody>
+                  </table>
+              </div>
+            </div>
+        </div>
+
         <div class="col-md-4 col-sm-4">
             <div class="panel panel-default">
               <div class="panel-heading">
@@ -66,50 +112,6 @@
               </div>
             </div>
         </div>
-        <div class="col-md-8 col-sm-8">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title"><span class="glyphicon glyphicon-list"></span> Daftar Dinas</h3>
-              </div>
-              <div class="panel-body">
-                  <table id="DataTable" class="table table-bordered " style="width:100%">
-                    <thead>
-                      <th>No</th>
-                      <th>Nama Kelembagaan</th>
-                      <th>Wilayah</th>
-                      <th>Pimpinan</th>
-                      <th>Alamat</th>
-                      <th>Telepon</th>
-                      <th>Fax</th>
-                      <th>Action</th>
-                    </thead>
-                      <tbody id="daftardinas">
-                          <?php
-                          $no = 1;
-                          foreach ($itemdinas->result() as $dinas) {
-                              ?>
-                              <tr>
-                                  <td><?php echo $no;?></td>
-                                  <td><?php echo $dinas->kelembagaan;?></td>
-                                  <td><?php echo $dinas->wilayah;?></td>
-                                  <td><?php echo $dinas->pimpinan;?></td>
-                                  <td><?php echo $dinas->alamat;?></td>
-                                  <td><?php echo $dinas->telepon;?></td>
-                                  <td><?php echo $dinas->fax;?></td>
-                                  <td>
-                                      <button type="button" class="btn btn-sm btn-info" data-iddinas="<?php echo $dinas->id_dinas;?>" name="editdinas<?php echo $dinas->id_dinas;?>" id="editdinas" ><span class="glyphicon glyphicon-edit"></span></button>
-                                      <button type="button" class="btn btn-sm btn-danger" data-iddinas="<?php echo $dinas->id_dinas;?>" name="deletedinas<?php echo $dinas->id_dinas;?>" id="deletedinas" onclick="window.location.reload()"><span class="glyphicon glyphicon-trash"></span></button>
-                                  </td>
-                              </tr>
-                              <?php
-                              $no++;
-                          }
-                           ?>
-                      </tbody>
-                  </table>
-              </div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -123,15 +125,7 @@
     .on('click','#editdinas',editdinas)
     .on('click','#deletedinas',deletedinas);
 
-    $(document).ready(function() {
-    var table = $('#DataTable').DataTable( {
-        responsive: true,
-        "lengthMenu": [ 5, 10, 25, 50, 75, 100 ]
-    } );
 
-
-    new $.fn.dataTable.FixedHeader( table );
-    } );
 
 
 
@@ -185,6 +179,7 @@
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);
     $("#alamat").val(alamat);
+    
 
   });
 
@@ -330,6 +325,16 @@ initMap();
             })
         }
     }
+
+    $(document).ready(function() {
+    var table = $('#DataTable').DataTable( {
+        responsive: true,
+        "lengthMenu": [ 5, 10, 25, 50, 75, 100 ],
+    } );
+
+
+    new $.fn.dataTable.FixedHeader( table );
+    } );
 
 </script>
 
