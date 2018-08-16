@@ -53,6 +53,11 @@
                       <li><?php echo anchor('admin/koordinatdinas','Koordinat Dinas') ?></li>
                   </ul>
               </li>
+              <li class='dropdown'><a href='#' class='dropdown-toggle' data-toggle='dropdown'><span class="glyphicon glyphicon-globe"></span> Rute <b class='caret'></b></a>
+                  <ul class='dropdown-menu'>
+                      <li><?php echo anchor('admin/rute','Generate Rute') ?></li>
+                  </ul>
+              </li>
 
             </ul>
 

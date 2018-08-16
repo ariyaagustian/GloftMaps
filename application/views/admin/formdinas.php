@@ -126,7 +126,15 @@
     .on('click','#deletedinas',deletedinas);
 
 
+    $(document).ready(function() {
+    var table = $('#DataTable').DataTable( {
+        responsive: true,
+        "lengthMenu": [ 5, 10, 25, 50, 75, 100 ],
+    } );
 
+
+    new $.fn.dataTable.FixedHeader( table );
+    } );
 
 
 
@@ -179,7 +187,33 @@
     marker.setPosition(place.geometry.location);
     marker.setVisible(true);
     $("#alamat").val(alamat);
-    
+
+    var center_lat = -6.983354;
+    var center_lng = 107.632154;
+
+    var JariJari = 6371;
+    var x1 = center_lat - lat;
+    var dLat = x1 * Math.PI / 180;
+    var x2 = center_lng - long;
+    var dLon = x2 * Math.PI / 180;
+
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(lat*Math.PI/180) * Math.cos(center_lat*Math.PI/180) *
+        Math.sin(dLon/2) * Math.sin(dLon/2);
+
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var jarak = JariJari * c;
+
+    $("#jarak").val(jarak);
+
+    // <?php
+    // $lat = $_POST['latitude'];
+    // $long = $_POST['longitude'];
+    // $center_lat = -6.983354;
+    // $center_lng = 107.632154;
+    // $distance =( 6371 * acos((cos(deg2rad($center_lat)) ) * (cos(deg2rad($lat))) * (cos(deg2rad($long) - deg2rad($center_lng)) )+ ((sin(deg2rad($center_lat))) * (sin(deg2rad($lat))))) );
+    //
+    // ?>
 
   });
 
@@ -225,6 +259,7 @@ initMap();
         $('#alamat').val('');
         $('#latitude').val('');
         $('#longitude').val('');
+        $('#jarak').val('');
         $('#telepon').val('');
         $('#fax').val('');
         $('#simpandinas').attr('disabled',false);
@@ -253,6 +288,7 @@ initMap();
                         $('#alamat').val(v['alamat']);
                         $('#latitude').val(v['latitude']);
                         $('#longitude').val(v['longitude']);
+                        $('#jarak').val(v['jarak']);
                         $('#telepon').val(v['telepon']);
                         $('#fax').val(v['fax']);
                     })
@@ -277,6 +313,7 @@ initMap();
         'alamat':$('#alamat').val(),
         'latitude':$('#latitude').val(),
         'longitude':$('#longitude').val(),
+        'jarak':$('#jarak').val(),
         'telepon':$('#telepon').val(),
         'fax':$('#fax').val(),
         'id_dinas':$('#id_dinas').val()
@@ -290,7 +327,6 @@ initMap();
                 if (data.status!='error') {
                     $('#daftardinas').load('<?php echo current_url()." #daftardinas > *";?>');
                     resetdinas();//form langsung dikosongkan pas selesai input data
-
                 }else{
                     alert(data.msg);
                 }
@@ -319,6 +355,7 @@ initMap();
                         alert(data.msg);
                     }
                 },
+
                 error : function(x,t,m){
                     alert(x.responseText);
                 }
@@ -326,15 +363,7 @@ initMap();
         }
     }
 
-    $(document).ready(function() {
-    var table = $('#DataTable').DataTable( {
-        responsive: true,
-        "lengthMenu": [ 5, 10, 25, 50, 75, 100 ],
-    } );
 
-
-    new $.fn.dataTable.FixedHeader( table );
-    } );
 
 </script>
 

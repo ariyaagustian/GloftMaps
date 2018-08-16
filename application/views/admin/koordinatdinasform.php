@@ -35,14 +35,7 @@
                                         <td><?php echo $no;?></td>
                                         <td><?php echo $dinas->kelembagaan." - ".$dinas->wilayah;?></td>
                                         <td><?php echo $dinas->alamat;?></td>
-                                        <td><?php
-                                        $latitude1 = -6.983354;
-                                        $longitude1 = 107.632154;
-                                        $dataJson = file_get_contents("https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=".$latitude1.",".$longitude1."&destinations=".$dinas->latitude.",".$dinas->longitude."&key=%20AIzaSyCWpwVwu1hO6TJW1H8x_zlhrLfbSbQ2r3o");
-                                        $data = json_decode($dataJson,true);
-                                        $nilaiJarak = $data['rows'][0]['elements'][0]['distance']['text'];
-                                        echo floatval($nilaiJarak);
-                                        ?></td>
+                                        <td><?php echo $dinas->jarak;?></td>
                                         <td>
                                           <?php
                                             if ($dinas->status == 0) {
