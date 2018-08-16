@@ -119,7 +119,8 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyCXx-VS9x3x47zG9IBFgvdqUSs0WOL972k"></script>
 
 <script>
-    $(document).on('click','#simpandinas',simpandinas)
+    $(document)
+    .on('click','#simpandinas',simpandinas)
     .on('click','#resetdinas',resetdinas)
     .on('click','#updatedinas',updatedinas)
     .on('click','#editdinas',editdinas)
@@ -127,7 +128,7 @@
 
 
     $(document).ready(function() {
-    var table = $('#DataTable').DataTable( {
+    var table = $('#DataTable').DataTable({
         responsive: true,
         "lengthMenu": [ 5, 10, 25, 50, 75, 100 ],
     } );
@@ -251,6 +252,7 @@ initMap();
                 alert(x.responseText);
             }
         })
+
     }
     function resetdinas() {//reset form jalan
         $('#kelembagaan').val('');
@@ -306,6 +308,7 @@ initMap();
 
 
     function updatedinas() {//update jalan
+
         var datadinas = {
         'kelembagaan':$('#kelembagaan').val(),
         'wilayah':$('#wilayah').val(),
@@ -318,6 +321,8 @@ initMap();
         'fax':$('#fax').val(),
         'id_dinas':$('#id_dinas').val()
       };
+
+
         $.ajax({
             url : '<?php echo site_url("admin/dinas/update");?>',
             data : datadinas,
@@ -326,7 +331,7 @@ initMap();
             success : function(data,status){
                 if (data.status!='error') {
                     $('#daftardinas').load('<?php echo current_url()." #daftardinas > *";?>');
-                    resetdinas();//form langsung dikosongkan pas selesai input data
+                    resetdinas();
                 }else{
                     alert(data.msg);
                 }
@@ -334,7 +339,8 @@ initMap();
             error : function(x,t,m){
                 alert(x.responseText);
             }
-        })
+        });
+
     }
 
 
@@ -366,11 +372,3 @@ initMap();
 
 
 </script>
-
-
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>

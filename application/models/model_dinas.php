@@ -27,10 +27,21 @@ class Model_dinas extends CI_Model{
         return $query;
     }
     public function getDistance(){
-        $this->db->select('id_dinas, latitude, longitude');
+        $this->db->select('id_dinas, kelembagaan, latitude, longitude');
         $query = $this->db->get('tbl_dinas');
         return $query;
     }
+
+    public function getRoute(){
+        $this->db->select('id_dinas, latitude, longitude');
+        $query = $this->db->get('tbl_dinas');
+        return $query;
+        // SELECT id_dinas, kelembagaan, latitude, longitude, 111.045 * DEGREES(ACOS(COS(RADIANS(latpoint)) * COS(RADIANS(latitude)) * COS(RADIANS(longpoint) - RADIANS(longitude)) + SIN(RADIANS(latpoint)) * SIN(RADIANS(latitude)))) AS distance_in_km FROM tbl_dinas JOIN ( SELECT -6.983354 AS latpoint, 107.632154 AS longpoint ) AS p ON 1=1 ORDER BY distance_in_km
+    }
+
+
+
+
     public function read($id){
         $this->db->where('id_dinas', $id);
         $query = $this->db->get('tbl_dinas');

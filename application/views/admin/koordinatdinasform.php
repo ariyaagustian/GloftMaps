@@ -35,7 +35,12 @@
                                         <td><?php echo $no;?></td>
                                         <td><?php echo $dinas->kelembagaan." - ".$dinas->wilayah;?></td>
                                         <td><?php echo $dinas->alamat;?></td>
-                                        <td><?php echo $dinas->jarak;?></td>
+                                        <td><?php
+                                        $center_lat = -6.983354;
+                                        $center_lng = 107.632154;
+                                        $distance = ( 6371 * acos((cos(deg2rad($center_lat)) ) * (cos(deg2rad($dinas->latitude))) * (cos(deg2rad($dinas->longitude) - deg2rad($center_lng)) )+ ((sin(deg2rad($center_lat))) * (sin(deg2rad($dinas->latitude))))) );
+                                        echo $distance;
+                                        ?></td>
                                         <td>
                                           <?php
                                             if ($dinas->status == 0) {
@@ -204,10 +209,4 @@ new $.fn.dataTable.FixedHeader( table );
 </script>
 
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
 <!--end script google map-->

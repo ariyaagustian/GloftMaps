@@ -16,29 +16,30 @@
                               <th></th>
                           </thead>
                           <tbody id="rutedinas">
-                              <?php
-                              if ($rutedinas->num_rows()!=null) {
-                                  $no = 1;
-                                  foreach ($rutedinas->result() as $dinas) {
-                                      ?>
-                                      <tr>
-                                          <td><?php echo $no;?></td>
-                                          <td><?php echo $dinas->id_dinas;?></td>
-                                          <td><?php echo $dinas->latitude;?></td>
-                                          <td><?php echo $dinas->longitude;?></td>
-                                          <td><?php
-                                        $center_lat = -6.983354;
-                                        $center_lng = 107.632154;
-                                        $distance =( 6371 * acos((cos(deg2rad($center_lat)) ) * (cos(deg2rad($dinas->latitude))) * (cos(deg2rad($dinas->longitude) - deg2rad($center_lng)) )+ ((sin(deg2rad($center_lat))) * (sin(deg2rad($dinas->latitude))))) );
-                                        echo $distance;
-                                          ?></td>
-                                      </tr>
-                                      <?php
-                                      $no++;
+                            <?php
+                            $center_lat_temp = -6.983354;
+                            $center_lng_temp = 107.632154;
+                            if ($rutedinas->num_rows()!=null) {
+                                $no = 1;
+                                $distanceArray = array();
 
-                                  }
-                              }
-                              ?>
+                                foreach ($rutedinas->result() as $dinas) {
+                                  $center_lat = $center_lat_temp;
+                                  $center_lng = $center_lng_temp;
+                                  $distance = ( 6371 * acos((cos(deg2rad($center_lat)) ) * (cos(deg2rad($dinas->latitude))) * (cos(deg2rad($dinas->longitude) - deg2rad($center_lng)) )+ ((sin(deg2rad($center_lat))) * (sin(deg2rad($dinas->latitude))))) );
+                                  // echo $no."-".$distance."<br>";
+                                  array_push($distanceArray, $distance);
+
+                                  $no++;
+                                }
+
+                                 $jarak_min = min($distanceArray);
+                                 $lokasi_min = array_search($jarak_min,$distanceArray);
+                                 echo $lokasi_min." - ".$jarak_min;
+                                 unset($distanceArray[$lokasi_min]);
+                                 print_r($distanceArray);
+                            }
+                            ?>
                           </tbody>
                       </table>
                   </div>
@@ -46,3 +47,16 @@
       </div>
   </div>
 </div>
+
+<script>
+
+$(document).ready(function() {
+var table = $('#DataTable').DataTable( {
+    responsive: true,
+    "lengthMenu": [ 5, 10, 25, 50, 75, 100 ],
+    "order": [["3","asc"]]
+} );
+
+new $.fn.dataTable.FixedHeader( table );
+} );
+</script>
