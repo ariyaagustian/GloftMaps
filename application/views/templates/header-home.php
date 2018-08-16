@@ -7,16 +7,15 @@
     <title>GloftMaps</title>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/datatable.bootstrap.css">
-    <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/fixedHeader.bootstrap.min.css">
-    <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/font-awesome.min.css">
-    <link rel="stylesheet" href="<?php echo base_url() ?>/assets/css/responsive.bootstrap.min.css">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.5/css/fixedHeader.bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css">
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="<?php echo base_url() ?>assets/js/jquery-3.3.1.js"></script>
-    <script src="<?php echo base_url() ?>assets/js/jquery.dataTables.min.js"></script>
-    <script src="<?php echo base_url() ?>assets/js/dataTable.bootstrap4.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
