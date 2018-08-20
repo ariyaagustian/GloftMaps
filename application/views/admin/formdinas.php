@@ -1,6 +1,5 @@
 <div class="container-fluid">
     <div class="row">
-
         <div class="col-md-8 col-sm-8">
             <div class="panel panel-default">
               <div class="panel-heading">
@@ -122,10 +121,9 @@
     .on('click','#deletedinas',deletedinas);
 
 
-
+    var table;
     $(document).ready(function() {
-    var table = $('#DataTable').DataTable( {
-
+    table = $('#DataTable').DataTable( {
         responsive: true,
         "lengthMenu": [ 5, 10, 25, 50, 75, 100 ],
     } );
@@ -325,6 +323,7 @@ initMap();
                 if (data.status!='error') {
                     // $('#daftardinas').load('<?php echo current_url()." #daftardinas > *";?>');
                     resetdinas();//form langsung dikosongkan pas selesai input data
+                    table.draw();
                 }else{
                     alert(data.msg);
                 }
