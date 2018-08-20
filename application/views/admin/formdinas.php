@@ -11,8 +11,6 @@
                     <thead>
                       <th>No</th>
                       <th>Nama Kelembagaan</th>
-                      <th>Wilayah</th>
-                      <th>Pimpinan</th>
                       <th>Alamat</th>
                       <th>Telepon</th>
                       <th>Fax</th>
@@ -25,9 +23,7 @@
                               ?>
                               <tr>
                                   <td><?php echo $no;?></td>
-                                  <td><?php echo $dinas->kelembagaan;?></td>
-                                  <td><?php echo $dinas->wilayah;?></td>
-                                  <td><?php echo $dinas->pimpinan;?></td>
+                                  <td><?php echo $dinas->kelembagaan." - ".$dinas->wilayah;?></td>
                                   <td><?php echo $dinas->alamat;?></td>
                                   <td><?php echo $dinas->telepon;?></td>
                                   <td><?php echo $dinas->fax;?></td>
@@ -125,10 +121,11 @@
     .on('click','#editdinas',editdinas)
     .on('click','#deletedinas',deletedinas);
 
-    var table;
+
 
     $(document).ready(function() {
-    table = $('#DataTable').DataTable( {
+    var table = $('#DataTable').DataTable( {
+
         responsive: true,
         "lengthMenu": [ 5, 10, 25, 50, 75, 100 ],
     } );
@@ -328,7 +325,6 @@ initMap();
                 if (data.status!='error') {
                     // $('#daftardinas').load('<?php echo current_url()." #daftardinas > *";?>');
                     resetdinas();//form langsung dikosongkan pas selesai input data
-                    table.ajax.reload();
                 }else{
                     alert(data.msg);
                 }
