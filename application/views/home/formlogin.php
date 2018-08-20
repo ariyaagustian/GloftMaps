@@ -37,7 +37,7 @@
         <div class="right">
           <div class="overlay"></div>
           <div class="content text">
-
+            <p>GloftMaps Web Application</p>
           </div>
         </div>
         <div class="clearfix"></div>
