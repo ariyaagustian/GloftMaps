@@ -90,6 +90,8 @@ new $.fn.dataTable.FixedHeader( table );
     var markers = [];
 
     function initialize() {
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer;
         var mapOptions = {
         zoom: 12,
         // Center di kantor

@@ -85,9 +85,6 @@
                             <div class="col-md-6 col-sm-6">
                                 <input type="text" class="form-control" id="longitude" placeholder="longitude" disabled="true">
                             </div>
-                            <div class="col-md-12 col-sm-12">
-                                <input type="text" class="form-control" id="jarak" placeholder="jarak" disabled="true">
-                            </div>
                         </div>
                       </div>
                       <div class="form-group">
@@ -200,8 +197,6 @@
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     var jarak = JariJari * c;
 
-    $("#jarak").val(jarak);
-
     // <?php
     // $lat = $_POST['latitude'];
     // $long = $_POST['longitude'];
@@ -225,7 +220,6 @@ initMap();
           'alamat':$('#alamat').val(),
           'latitude':$('#latitude').val(),
           'longitude':$('#longitude').val(),
-          'jarak':$('#jarak').val(),
           'telepon':$('#telepon').val(),
           'fax':$('#fax').val()
         };
@@ -255,7 +249,6 @@ initMap();
         $('#alamat').val('');
         $('#latitude').val('');
         $('#longitude').val('');
-        $('#jarak').val('');
         $('#telepon').val('');
         $('#fax').val('');
         $('#simpandinas').attr('disabled',false);
@@ -284,7 +277,6 @@ initMap();
                         $('#alamat').val(v['alamat']);
                         $('#latitude').val(v['latitude']);
                         $('#longitude').val(v['longitude']);
-                        $('#jarak').val(v['jarak']);
                         $('#telepon').val(v['telepon']);
                         $('#fax').val(v['fax']);
                     })
@@ -309,7 +301,6 @@ initMap();
         'alamat':$('#alamat').val(),
         'latitude':$('#latitude').val(),
         'longitude':$('#longitude').val(),
-        'jarak':$('#jarak').val(),
         'telepon':$('#telepon').val(),
         'fax':$('#fax').val(),
         'id_dinas':$('#id_dinas').val()

@@ -19,7 +19,8 @@ class Rute extends CI_Controller
   function index()
   {
     $data = array('content' => 'admin/rute',
-    'rutedinas' => $this->model_dinas->getDistance()
+    'datadinas' => $this->model_dinas->getAll(),
+    'rutedinas' => $this->model_dinas->getAll()
   );
     $this->load->view('templates/template-admin', $data);
 
