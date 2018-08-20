@@ -6,6 +6,16 @@
                   </span> Hitung Jarak
                   </div>
                   <div class="panel-body" style="min-height:400px">
+                    <form class="form-inline" action="" method="post">
+                      <div class="form-group mb-2 ">
+                        <input type="text" class="form-control" name="generate_rute" id="generate_rute" placeholder="Jumlah Rute">
+                      </div>
+                      <div class="form-group mb-2">
+                        <button type="button" class="btn btn-danger" name="button_generate_rute">Generate</button>
+                      </div>
+                    </form>
+                    <br>
+
                       <table id="DataTable" class="table table-bordered " style="width:100%">
                           <thead>
                               <th>No</th>
@@ -16,7 +26,7 @@
                               <th></th>
                           </thead>
                           <tbody id="rutedinas">
-                            <?php
+                            <!-- <?php
                             $center_lat_temp = -6.983354;
                             $center_lng_temp = 107.632154;
                             if ($rutedinas->num_rows()!=null) {
@@ -39,7 +49,7 @@
                                  unset($distanceArray[$lokasi_min]);
                                  print_r($distanceArray);
                             }
-                            ?>
+                            ?> -->
                           </tbody>
                       </table>
                   </div>
