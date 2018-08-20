@@ -12,7 +12,6 @@ class Model_dinas extends CI_Model{
         'latitude'=>$this->input->post('latitude'),
         'longitude'=>$this->input->post('longitude'),
         'telepon'=>$this->input->post('telepon'),
-        'jarak'=>$this->input->post('jarak'),
         'fax'=>$this->input->post('fax')
         );
         $query = $this->db->insert('tbl_dinas', $data);
@@ -68,7 +67,6 @@ class Model_dinas extends CI_Model{
         'latitude'=>$this->input->post('latitude'),
         'longitude'=>$this->input->post('longitude'),
         'telepon'=>$this->input->post('telepon'),
-        'jarak'=>$this->input->post('jarak'),
         'fax'=>$this->input->post('fax')
         );
         $this->db->where('id_dinas', $id);
