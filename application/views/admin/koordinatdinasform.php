@@ -207,6 +207,7 @@ new $.fn.dataTable.FixedHeader( table );
     }
 
 </script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
 
 
 <!--end script google map-->

@@ -119,16 +119,16 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyCXx-VS9x3x47zG9IBFgvdqUSs0WOL972k"></script>
 
 <script>
-    $(document)
-    .on('click','#simpandinas',simpandinas)
+    $(document).on('click','#simpandinas',simpandinas)
     .on('click','#resetdinas',resetdinas)
     .on('click','#updatedinas',updatedinas)
     .on('click','#editdinas',editdinas)
     .on('click','#deletedinas',deletedinas);
 
+    var table;
 
     $(document).ready(function() {
-    var table = $('#DataTable').DataTable({
+    table = $('#DataTable').DataTable( {
         responsive: true,
         "lengthMenu": [ 5, 10, 25, 50, 75, 100 ],
     } );
@@ -252,7 +252,6 @@ initMap();
                 alert(x.responseText);
             }
         })
-
     }
     function resetdinas() {//reset form jalan
         $('#kelembagaan').val('');
@@ -308,7 +307,6 @@ initMap();
 
 
     function updatedinas() {//update jalan
-
         var datadinas = {
         'kelembagaan':$('#kelembagaan').val(),
         'wilayah':$('#wilayah').val(),
@@ -321,8 +319,6 @@ initMap();
         'fax':$('#fax').val(),
         'id_dinas':$('#id_dinas').val()
       };
-
-
         $.ajax({
             url : '<?php echo site_url("admin/dinas/update");?>',
             data : datadinas,
@@ -330,8 +326,9 @@ initMap();
             type : 'POST',
             success : function(data,status){
                 if (data.status!='error') {
-                    $('#daftardinas').load('<?php echo current_url()." #daftardinas > *";?>');
-                    resetdinas();
+                    // $('#daftardinas').load('<?php echo current_url()." #daftardinas > *";?>');
+                    resetdinas();//form langsung dikosongkan pas selesai input data
+                    table.ajax.reload();
                 }else{
                     alert(data.msg);
                 }
@@ -339,8 +336,7 @@ initMap();
             error : function(x,t,m){
                 alert(x.responseText);
             }
-        });
-
+        })
     }
 
 
