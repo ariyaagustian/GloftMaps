@@ -38,7 +38,7 @@
                 </select>
                 <input type="submit" name="submit" class="btn btn-danger" value="Daftar">
               </div>
-              Belum mempunyai akun? <a href="<?php echo base_url();?>index.php/login">Login? </a>
+              Sudah mempunyai akun? <a href="<?php echo base_url();?>index.php/login">Login </a>
             </form>
             <?php if ($message!=null): ?>
                 <div class="alert alert-warning"><?php echo $message;?></div>
