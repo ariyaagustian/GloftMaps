@@ -30,6 +30,14 @@ class Model_dinas extends CI_Model{
         $query = $this->db->get('tbl_dinas');
         return $query;
     }
+
+    public function gantistatusdinas($id_dinas){
+        $this->db->set('status', 1);
+        $this->db->where('id_dinas', $id_dinas);
+        $query = $this->db->update('tbl_dinas');
+        return $query;
+    }
+
     public function getDistance(){
         $this->db->select('id_dinas, kelembagaan, latitude, longitude');
         $query = $this->db->get('tbl_dinas');

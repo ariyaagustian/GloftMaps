@@ -72,13 +72,10 @@
 <!--script google map-->
 
 <script>
-$(document).on('click','#clearmap',clearmap)
-.on('click','#hapusmarkerdinas',hapusmarkerdinas)
-.on('click','#gantistatusdinas',gantistatusdinas)
-.on('click','#viewmarkerdinas',viewmarkerdinas);
 
+var table;
 $(document).ready(function() {
-var table = $('#DataTable').DataTable( {
+table = $('#DataTable').DataTable( {
     responsive: true,
     "lengthMenu": [ 5, 10, 25, 50, 75, 100 ],
     "order": [["3","asc"]]
@@ -86,6 +83,12 @@ var table = $('#DataTable').DataTable( {
 
 new $.fn.dataTable.FixedHeader( table );
 } );
+
+$(document).on('click','#clearmap',clearmap)
+.on('click','#hapusmarkerdinas',hapusmarkerdinas)
+.on('click','#gantistatusdinas',gantistatusdinas)
+.on('click','#viewmarkerdinas',viewmarkerdinas);
+
     var map;
     var markers = [];
 
@@ -206,6 +209,33 @@ new $.fn.dataTable.FixedHeader( table );
             }
         })
 
+    }
+
+
+    function gantistatusdinas() {//delete jalan
+        if (confirm("Anda yakin akan Sudah mengunjungi Dinas ini?")) {
+            var id = $(this).data('iddatadinas');
+            var datadinas = {'id_dinas':id};
+            $.ajax({
+                url : '<?php echo site_url("admin/koordinatdinas/gantistatusdinas");?>',
+                data : datadinas,
+                dataType : 'json',
+                type : 'POST',
+                success : function(data,status){
+                    if (data.status!='error') {
+                        // $('#daftarkoordinatdinas').load('<?php echo current_url()." #daftarkoordinatdinas > *";?>');
+                        alert("Dinas Telah Dikunjungi");
+                        location.reload();
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+
+                error : function(x,t,m){
+                    alert(x.responseText);
+                }
+            })
+        }
     }
 
 </script>

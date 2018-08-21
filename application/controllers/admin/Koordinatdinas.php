@@ -42,6 +42,24 @@ class Koordinatdinas extends CI_Controller
         }
     }
 
+    function gantistatusdinas(){
+          if (!$this->input->is_ajax_request()) {
+              show_404();
+          }else{
+              $id = $this->input->post('id_dinas');
+              if ($id!=null){
+                  $status = 'success';
+                  $msg = $this->model_dinas->gantistatusdinas($id);
+                  $datadinas = $this->model_dinas->read($this->input->post('id_dinas'))->result();
+              }else{
+                  $status = 'error';
+                  $msg = 'data tidak ditemukan';
+                  $datadinas = null;
+              }
+              $this->output->set_content_type('application/json')->set_output(json_encode(array('status'=>$status,'msg'=>$msg,'datadinas'=>$datadinas)));
+          }
+      }
+
 
 
 
