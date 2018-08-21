@@ -20,7 +20,7 @@ class Rute extends CI_Controller
   {
     $data = array('content' => 'admin/rute',
     'datadinas' => $this->model_dinas->getAll(),
-    'rutedinas' => $this->model_dinas->getAll()
+    'rutedinas' => $this->model_dinas->getbyStatus()
   );
     $this->load->view('templates/template-admin', $data);
 

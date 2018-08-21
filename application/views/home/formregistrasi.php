@@ -24,7 +24,7 @@
               <div class="form-group">
                 <input type="text" class="form-control" id="phone" name="phone" placeholder="nomer tlp">
               </div>
-              <hr>
+
               <div class="form-group">
                 <input type="text" class="form-control" id="email" name="email" placeholder="email">
               </div>
@@ -37,8 +37,8 @@
                   <option value="2">Member</option>
                 </select>
                 <input type="submit" name="submit" class="btn btn-danger" value="Daftar">
-                <a href="<?php echo base_url();?>index.php/login"><input type="button" name="login" class="btn btn-primary" value="Login"></a>
               </div>
+              Belum mempunyai akun? <a href="<?php echo base_url();?>index.php/login">Login? </a>
             </form>
             <?php if ($message!=null): ?>
                 <div class="alert alert-warning"><?php echo $message;?></div>

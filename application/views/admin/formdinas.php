@@ -231,6 +231,7 @@ initMap();
             type : 'POST',
             success : function(data,status){
                 if (data.status!='error') {
+                    alert("Data Berhasil Ditambah");
                     $('#daftardinas').load('<?php echo current_url()." #daftardinas > *";?>');
                     resetdinas();//form langsung dikosongkan pas selesai input data
                 }else{
@@ -312,9 +313,10 @@ initMap();
             type : 'POST',
             success : function(data,status){
                 if (data.status!='error') {
-                    // $('#daftardinas').load('<?php echo current_url()." #daftardinas > *";?>');
+                    alert("Data Berhasil Diubah");
+                    $('#daftardinas').load('<?php echo current_url()." #daftardinas > *";?>');
                     resetdinas();//form langsung dikosongkan pas selesai input data
-                    table.draw();
+
                 }else{
                     alert(data.msg);
                 }
@@ -338,6 +340,7 @@ initMap();
                 success : function(data,status){
                     if (data.status!='error') {
                         $('#daftardinas').load('<?php echo current_url()." #daftardinas > *";?>');
+                        alert("Data Terhapus");
                         resetdinas();//form langsung dikosongkan pas selesai input data
                     }else{
                         alert(data.msg);

@@ -45,9 +45,6 @@ class Model_dinas extends CI_Model{
 
 
 
-
-
-
     public function read($id){
         $this->db->where('id_dinas', $id);
         $query = $this->db->get('tbl_dinas');

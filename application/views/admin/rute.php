@@ -1,6 +1,6 @@
-<div class="container">
-  <div class="container">
 
+<div class="container">
+  <div class="row">
               <div class="panel panel-default">
                   <div class="panel-heading"><span class="glyphicon glyphicon-th-list">
                   </span> Hitung Jarak
@@ -26,35 +26,79 @@
                               <th></th>
                           </thead>
                           <tbody id="rutedinas">
-                            <!-- <?php
+                            <?php
                             $center_lat_temp = -6.983354;
                             $center_lng_temp = 107.632154;
+                            $objArr = array();
+                            $minObj = new stdClass();
                             if ($rutedinas->num_rows()!=null) {
                                 $no = 1;
                                 $distanceArray = array();
-
-                                foreach ($rutedinas->result() as $dinas) {
+                                $min = -1;
+                                foreach ($rutedinas->result() as $key => $dinas) {
+                                  $obj = new stdClass();
                                   $center_lat = $center_lat_temp;
                                   $center_lng = $center_lng_temp;
                                   $distance = ( 6371 * acos((cos(deg2rad($center_lat)) ) * (cos(deg2rad($dinas->latitude))) * (cos(deg2rad($dinas->longitude) - deg2rad($center_lng)) )+ ((sin(deg2rad($center_lat))) * (sin(deg2rad($dinas->latitude))))) );
                                   // echo $no."-".$distance."<br>";
+                                  if ($key<1) {
+                                    $min = $distance;
+                                    $minObj->id = $dinas->id_dinas;
+                                    $minObj->distance = $distance;
+                                    $minObj->latitude = $dinas->latitude;
+                                    $minObj->longitude = $dinas->longitude;
+                                  }else{
+                                    if ($distance<$minObj->distance) {
+                                      $min = $distance;
+                                      $minObj->id = $dinas->id_dinas;
+                                      $minObj->distance = $distance;
+                                      $minObj->latitude = $dinas->latitude;
+                                      $minObj->longitude = $dinas->longitude;
+                                    }
+                                  }
+                                  $obj->id = $dinas->id_dinas;
+                                  $obj->distance = $distance;
+                                  $objArr[$key] = $obj;
                                   array_push($distanceArray, $distance);
 
                                   $no++;
                                 }
-
-                                 $jarak_min = min($distanceArray);
-                                 $lokasi_min = array_search($jarak_min,$distanceArray);
-                                 echo $lokasi_min." - ".$jarak_min;
-                                 unset($distanceArray[$lokasi_min]);
-                                 print_r($distanceArray);
+                                $min = 0;
+                                // print_r($objArr);
+                                // $objMin = new stdClass();
+                                // foreach($objArr as $i => $o){
+                                //   if ($i<1) {
+                                //     $objMin->id = $o->id;
+                                //     $objMin->distance = $o->distance;
+                                //   }
+                                //   else{
+                                //     if ($o->distance < $objMin->distance) {
+                                //       $objMin->id = $o->id;
+                                //       $objMin->distance = $o->distance;
+                                //     }
+                                //   }
+                                //   // echo $i.':'.$o->distance.'<br>';
+                                // }
+                                print_r($minObj);
+                                 // $jarak_min = min($distanceArray);
+                                 // $lokasi_min = array_search($jarak_min,$distanceArray);
+                                 // echo $lokasi_min." - ".$jarak_min;
+                                 // unset($distanceArray[$lokasi_min]);
+                                 // print_r($distanceArray);
                             }
-                            ?> -->
+                            ?>
                           </tbody>
                       </table>
                   </div>
               </div>
+
+              <div class="panel panel-default">
+                  <div class="panel-heading"><span class="glyphicon glyphicon-globe"></span> Peta</div>
+                  <div class="panel-body" style="height:500px;" id="map-canvas">
+              </div>
+              </div>
       </div>
+    </div>
   </div>
 </div>
 
