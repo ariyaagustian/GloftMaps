@@ -1,5 +1,6 @@
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCXx-VS9x3x47zG9IBFgvdqUSs0WOL972k">
+<script src="//maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCXx-VS9x3x47zG9IBFgvdqUSs0WOL972k">
 </script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.25/gmaps.min.js" charset="utf-8"></script>
 
 <div class="container">
   <div class="row">
@@ -23,7 +24,7 @@
                     </form>
                     <br>
 
-                      <table id="DataTable" class="table table-bordered " style="width:100%">
+                      <table id="rutedinas" class="table table-bordered " style="width:100%">
                           <thead>
                               <th>No</th>
                               <th>Data dinas</th>
@@ -32,68 +33,8 @@
                               <th>Jarak</th>
                               <th></th>
                           </thead>
-                          <tbody id="rutedinas">
-                            <?php
-                            $center_lat_temp = -6.983354;
-                            $center_lng_temp = 107.632154;
-                            $objArr = array();
-                            $minObj = new stdClass();
-                            if ($rutedinas->num_rows()!=null) {
-                                $no = 1;
-                                $distanceArray = array();
-                                $min = -1;
-                                foreach ($rutedinas->result() as $key => $dinas) {
-                                  $obj = new stdClass();
-                                  $center_lat = $center_lat_temp;
-                                  $center_lng = $center_lng_temp;
-                                  $distance = ( 6371 * acos((cos(deg2rad($center_lat)) ) * (cos(deg2rad($dinas->latitude))) * (cos(deg2rad($dinas->longitude) - deg2rad($center_lng)) )+ ((sin(deg2rad($center_lat))) * (sin(deg2rad($dinas->latitude))))) );
-                                  // echo $no."-".$distance."<br>";
-                                  if ($key<1) {
-                                    $min = $distance;
-                                    $minObj->id = $dinas->id_dinas;
-                                    $minObj->distance = $distance;
-                                    $minObj->latitude = $dinas->latitude;
-                                    $minObj->longitude = $dinas->longitude;
-                                  }else{
-                                    if ($distance<$minObj->distance) {
-                                      $min = $distance;
-                                      $minObj->id = $dinas->id_dinas;
-                                      $minObj->distance = $distance;
-                                      $minObj->latitude = $dinas->latitude;
-                                      $minObj->longitude = $dinas->longitude;
-                                    }
-                                  }
-                                  $obj->id = $dinas->id_dinas;
-                                  $obj->distance = $distance;
-                                  $objArr[$key] = $obj;
-                                  array_push($distanceArray, $distance);
+                          <tbody>
 
-                                  $no++;
-                                }
-                                $min = 0;
-                                // print_r($objArr);
-                                // $objMin = new stdClass();
-                                // foreach($objArr as $i => $o){
-                                //   if ($i<1) {
-                                //     $objMin->id = $o->id;
-                                //     $objMin->distance = $o->distance;
-                                //   }
-                                //   else{
-                                //     if ($o->distance < $objMin->distance) {
-                                //       $objMin->id = $o->id;
-                                //       $objMin->distance = $o->distance;
-                                //     }
-                                //   }
-                                //   // echo $i.':'.$o->distance.'<br>';
-                                // }
-                                print_r($minObj);
-                                 // $jarak_min = min($distanceArray);
-                                 // $lokasi_min = array_search($jarak_min,$distanceArray);
-                                 // echo $lokasi_min." - ".$jarak_min;
-                                 // unset($distanceArray[$lokasi_min]);
-                                 // print_r($distanceArray);
-                            }
-                            ?>
                           </tbody>
                       </table>
                   </div>
@@ -106,40 +47,23 @@
 </div>
 
 <script>
-
 $(document).ready(function() {
-var table = $('#DataTable').DataTable( {
-    responsive: true,
-    "lengthMenu": [ 5, 10, 25, 50, 75, 100 ],
-    "order": [["3","asc"]]
-} );
+  maps = null ;
+  maps = new GMaps({
+        div: '#map-canvas',
+        lat: -6.984034,
+        lng: 107.632257
+  });
+  maps.addMarker({
+    lat: -6.984034,
+    lng: 107.632257,
+    title: 'Kantor',
+    icon : "https://gloftech.co.id/assets/favicon.ico"
+  });
+  maps.setZoom(12);
+  table_main = $("#rutedinas").DataTable({
+    ajax:"<?= base_url("index.php/admin/rute/datarute") ?>"
+  })
 
-new $.fn.dataTable.FixedHeader( table );
-} );
-
-var map;
-var markers = [];
-
-function initialize() {
-    var directionsService = new google.maps.DirectionsService;
-    var directionsDisplay = new google.maps.DirectionsRenderer;
-    var mapOptions = {
-    zoom: 12,
-    // Center di kantor
-    center: new google.maps.LatLng(-6.984034, 107.632257)
-
-    };
-
-    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-    var image = 'https://gloftech.co.id/assets/favicon.ico';
-    var label = 'Gloftech';
-    var markerKantor = new google.maps.Marker({
-        position: new google.maps.LatLng(-6.984034, 107.632257),
-        map: map,
-        icon: image
-    });
-}
-
-google.maps.event.addDomListener(window, 'load', initialize);
-
+});
 </script>
