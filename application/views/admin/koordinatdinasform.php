@@ -79,9 +79,8 @@ table = $('#DataTable').DataTable( {
     responsive: true,
     "lengthMenu": [ 5, 10, 25, 50, 75, 100 ],
     "order": [["3","asc"]]
-} );
+  } );
 
-new $.fn.dataTable.FixedHeader( table );
 } );
 
 $(document).on('click','#clearmap',clearmap)
