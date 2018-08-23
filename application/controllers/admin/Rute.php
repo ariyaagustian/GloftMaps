@@ -136,4 +136,42 @@ class Rute extends CI_Controller
     // header('Content-Type: application/json');
     // echo json_encode($jarak);
   }
+  public function test()
+  {
+    $d = $this->model_dinas->getbyStatus()->result();
+    $dis = function($latitude1, $longitude1, $latitude2, $longitude2) {
+        $earth_radius = 6371;
+        $dLat = deg2rad($latitude2 - $latitude1);
+        $dLon = deg2rad($longitude2 - $longitude1);
+        $a = sin($dLat/2) * sin($dLat/2) + cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * sin($dLon/2) * sin($dLon/2);
+        $c = 2 * asin(sqrt($a));
+        $d = $earth_radius * $c;
+        return $d;
+    };
+    $latLng = [];
+    $latLng[] = ["id"=>0,"lat"=>"-6.984034","lng"=>"107.632257"];
+    foreach ($d as $key => $value) {
+      $latLng[] = ["id"=>$value->id_dinas,"lat"=>$value->latitude,"lng"=>$value->longitude];
+    }
+    $complete = [];
+    $i = 0;
+    foreach ($latLng as $key => $value) {
+        $di = $value;
+        $completed = [];
+        foreach ($latLng as $key1 => $value1) {
+          if ($key1 > $key) {
+            $jarak = $dis($di["lat"],$di["lng"],$value1["lat"],$value1["lng"]);
+            $completed[] = ["id_origin"=>$value["id"],"id_dest"=>$value1["id"],"origin_lat"=>$di["lat"],"origin_lng"=>$di["lng"],"dest_lat"=>$value1["lat"],"dest_lng"=>$value1["lng"],"jarak"=>$jarak];
+          }
+        }
+        usort($completed, function($a, $b) {
+          return $a['jarak'] <=> $b['jarak'];
+        });
+        
+        $complete[] = $completed;
+
+    }
+    header('Content-Type: application/json');
+    echo json_encode($complete);
+  }
 }
