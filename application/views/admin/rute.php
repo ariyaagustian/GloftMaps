@@ -1,7 +1,14 @@
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCXx-VS9x3x47zG9IBFgvdqUSs0WOL972k">
+</script>
 
 <div class="container">
   <div class="row">
-              <div class="panel panel-default">
+        <div class="panel panel-default">
+            <div class="panel-heading"><span class="glyphicon glyphicon-globe"></span> Peta</div>
+            <div class="panel-body" style="height:500px;" id="map-canvas">
+        </div>
+        </div>
+                  <div class="panel panel-default">
                   <div class="panel-heading"><span class="glyphicon glyphicon-th-list">
                   </span> Hitung Jarak
                   </div>
@@ -92,11 +99,7 @@
                   </div>
               </div>
 
-              <div class="panel panel-default">
-                  <div class="panel-heading"><span class="glyphicon glyphicon-globe"></span> Peta</div>
-                  <div class="panel-body" style="height:500px;" id="map-canvas">
-              </div>
-              </div>
+
       </div>
     </div>
   </div>
@@ -113,4 +116,30 @@ var table = $('#DataTable').DataTable( {
 
 new $.fn.dataTable.FixedHeader( table );
 } );
+
+var map;
+var markers = [];
+
+function initialize() {
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+    var mapOptions = {
+    zoom: 12,
+    // Center di kantor
+    center: new google.maps.LatLng(-6.984034, 107.632257)
+
+    };
+
+    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    var image = 'https://gloftech.co.id/assets/favicon.ico';
+    var label = 'Gloftech';
+    var markerKantor = new google.maps.Marker({
+        position: new google.maps.LatLng(-6.984034, 107.632257),
+        map: map,
+        icon: image
+    });
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
 </script>
