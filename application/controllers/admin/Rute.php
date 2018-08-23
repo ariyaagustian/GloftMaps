@@ -155,20 +155,39 @@ class Rute extends CI_Controller
     }
     $complete = [];
     $i = 0;
-    foreach ($latLng as $key => $value) {
+    foreach ($latLng as $key => &$value) {
         $di = $value;
         $completed = [];
+        $s = 1;
         foreach ($latLng as $key1 => $value1) {
           if ($key1 > $key) {
             $jarak = $dis($di["lat"],$di["lng"],$value1["lat"],$value1["lng"]);
-            $completed[] = ["id_origin"=>$value["id"],"id_dest"=>$value1["id"],"origin_lat"=>$di["lat"],"origin_lng"=>$di["lng"],"dest_lat"=>$value1["lat"],"dest_lng"=>$value1["lng"],"jarak"=>$jarak];
+            $completed[] = ["key"=>$key1,"id_origin"=>$value["id"],"id_dest"=>$value1["id"],"origin_lat"=>$di["lat"],"origin_lng"=>$di["lng"],"dest_lat"=>$value1["lat"],"dest_lng"=>$value1["lng"],"jarak"=>$jarak];
+          }elseif ($key1 == $key) {
+            if (!isset($latLng[($key1+1)])) {
+              $s = 0;
+            }
           }
         }
-        usort($completed, function($a, $b) {
-          return $a['jarak'] <=> $b['jarak'];
-        });
-        
-        $complete[] = $completed;
+        $swap =  function (&$array,$swap_a,$swap_b){
+           list($array[$swap_a],$array[$swap_b]) = array($array[$swap_b],$array[$swap_a]);
+        };
+        if ($s == 1) {
+          usort($completed, function($a, $b) {
+            return $a['jarak'] <=> $b['jarak'];
+          });
+          $min = $completed[0];
+          $keys = $min["key"];
+          if (isset($latLng[$key+1])) {
+            $temp = $latLng[($key+1)];
+            $latLng[$keys] = $temp;
+            $latLng[($key+1)] = ["id"=>$min["id_dest"],"lat"=>$min["dest_lat"],"lng"=>$min["dest_lng"]];
+          }
+          $complete[] = $completed;
+        }
+        // if (isset($completed[0]["id_dest"])) {
+          // $latLng[$key+1] = ["id"=>$completed[0]["id_dest"],"lat"=>$completed[0]["dest_lat"],"lng"=>$completed[0]["dest_lng"]];
+        // }
 
     }
     header('Content-Type: application/json');
