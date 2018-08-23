@@ -26,6 +26,20 @@ class Dinas extends CI_Controller{
         $this->load->view('templates/template-admin', $data);
     }
 
+    public function datadinas()
+    {
+      // FETCH DATA DINAS
+       $d = $this->model_dinas->getAll()->result();
+       $data = [];
+       $data["data"] = [];
+       $i = 1;
+       foreach ($d as $key => $value) {
+         $obj =
+         $data["data"][] = [$i++,$value->kelembagaan." - ".$value->wilayah,$value->alamat,$value->telepon,$value->fax,'<button type="button" class="btn btn-sm btn-info" data-iddinas="'.$value->id_dinas.'" name="editdinas'.$value->id_dinas.'" id="editdinas" ><span class="glyphicon glyphicon-edit"></span></button> <button type="button" class="btn btn-sm btn-danger" data-iddinas="'.$value->id_dinas.'" name="deletedinas'.$value->id_dinas.'" id="deletedinas" ><span class="glyphicon glyphicon-trash"></span></button>'];
+       }
+       header('Content-Type: application/json');
+       echo json_encode($data);
+    }
 
     function create(){
             if (!$this->input->is_ajax_request()) {

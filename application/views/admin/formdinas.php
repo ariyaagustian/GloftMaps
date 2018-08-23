@@ -6,7 +6,7 @@
                 <h3 class="panel-title"><span class="glyphicon glyphicon-list"></span> Daftar Dinas</h3>
               </div>
               <div class="panel-body">
-                  <table id="DataTable" class="table table-bordered " style="width:100%">
+                  <table id="daftardinas" class="table table-bordered " style="width:100%">
                     <thead>
                       <th>No</th>
                       <th>Nama Kelembagaan</th>
@@ -15,26 +15,8 @@
                       <th>Fax</th>
                       <th>Action</th>
                     </thead>
-                      <tbody id="daftardinas">
-                          <?php
-                          $no = 1;
-                          foreach ($itemdinas->result() as $dinas) {
-                              ?>
-                              <tr>
-                                  <td><?php echo $no;?></td>
-                                  <td><?php echo $dinas->kelembagaan." - ".$dinas->wilayah;?></td>
-                                  <td><?php echo $dinas->alamat;?></td>
-                                  <td><?php echo $dinas->telepon;?></td>
-                                  <td><?php echo $dinas->fax;?></td>
-                                  <td>
-                                      <button type="button" class="btn btn-sm btn-info" data-iddinas="<?php echo $dinas->id_dinas;?>" name="editdinas<?php echo $dinas->id_dinas;?>" id="editdinas" ><span class="glyphicon glyphicon-edit"></span></button>
-                                      <button type="button" class="btn btn-sm btn-danger" onclick="location.reload()" data-iddinas="<?php echo $dinas->id_dinas;?>" name="deletedinas<?php echo $dinas->id_dinas;?>" id="deletedinas" ><span class="glyphicon glyphicon-trash"></span></button>
-                                  </td>
-                              </tr>
-                              <?php
-                              $no++;
-                          }
-                           ?>
+                      <tbody>
+
                       </tbody>
                   </table>
               </div>
@@ -96,9 +78,9 @@
                         <input type="text" class="form-control" id="fax" placeholder="">
                       </div>
                       <div class="form-group">
-                        <button type="button" name="simpandinas" id="simpandinas" onclick="location.reload()" class="btn btn-primary">Simpan</button>
+                        <button type="button" name="simpandinas" id="simpandinas" class="btn btn-primary">Simpan</button>
                         <button type="button" name="resetdinas"  id="resetdinas" class="btn btn-warning">Reset</button>
-                        <button type="button" name="updatedinas" id="updatedinas" onclick="location.reload()" class="btn btn-info" disabled="true">Update</button>
+                        <button type="button" name="updatedinas" id="updatedinas" class="btn btn-info" disabled="true">Update</button>
                       </div>
                   </form>
               </div>
@@ -120,13 +102,11 @@
 
     var table;
     $(document).ready(function() {
-    table = $('#DataTable').DataTable( {
+    table = $('#daftardinas').DataTable( {
+        ajax:"<?= base_url("index.php/admin/dinas/datadinas") ?>",
         responsive: true,
         "lengthMenu": [ 5, 10, 25, 50, 75, 100 ],
-    } );
-
-
-    new $.fn.dataTable.FixedHeader( table );
+      } );
     } );
 
 
@@ -232,7 +212,8 @@ initMap();
             success : function(data,status){
                 if (data.status!='error') {
                     alert("Data Berhasil Ditambah");
-                    $('#daftardinas').load('<?php echo current_url()." #daftardinas > *";?>');
+                    table.ajax.reload();
+                    // $('#daftardinas').load('<?php echo current_url()." #daftardinas > *";?>');
                     resetdinas();//form langsung dikosongkan pas selesai input data
                 }else{
                     alert(data.msg);
@@ -314,7 +295,8 @@ initMap();
             success : function(data,status){
                 if (data.status!='error') {
                     alert("Data Berhasil Diubah");
-                    $('#daftardinas').load('<?php echo current_url()." #daftardinas > *";?>');
+                    table.ajax.reload();
+                    // $('#daftardinas').load('<?php echo current_url()." #daftardinas > *";?>');
                     resetdinas();//form langsung dikosongkan pas selesai input data
 
                 }else{
@@ -339,8 +321,9 @@ initMap();
                 type : 'POST',
                 success : function(data,status){
                     if (data.status!='error') {
-                        $('#daftardinas').load('<?php echo current_url()." #daftardinas > *";?>');
+
                         alert("Data Terhapus");
+                        table.ajax.reload();
                         resetdinas();//form langsung dikosongkan pas selesai input data
                     }else{
                         alert(data.msg);
