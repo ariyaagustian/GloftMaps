@@ -5,11 +5,11 @@
 <div class="container">
     <div class="row">
 
-            <div class="panel panel-default">
+            <!-- <div class="panel panel-default">
                 <div class="panel-heading"><span class="glyphicon glyphicon-globe"></span> Peta</div>
                 <div class="panel-body" style="height:500px;" id="map-canvas">
             </div>
-        </div>
+        </div> -->
 
             <div class="panel panel-default">
                 <div class="panel-heading"><span class="glyphicon glyphicon-th-list">
@@ -41,17 +41,18 @@
                                         $distance = ( 6371 * acos((cos(deg2rad($center_lat)) ) * (cos(deg2rad($dinas->latitude))) * (cos(deg2rad($dinas->longitude) - deg2rad($center_lng)) )+ ((sin(deg2rad($center_lat))) * (sin(deg2rad($dinas->latitude))))) );
                                         echo $distance;
                                         ?></td>
-                                        <td>
+                                        <td><span class="label label-success">
                                           <?php
                                             if ($dinas->status == 0) {
                                               echo "Belum Dikunjungi";
+                                            } else {
+                                              echo "Sudah Dikunjungi";
                                             }
                                           ?>
+                                        </span>
                                         </td>
                                         <td>
-                                            <button class="btn-info btn btn-sm" id="viewmarkerdinas" data-iddatadinas=<?php echo $dinas->id_dinas?>><span class="glyphicon glyphicon-eye-open"></span> Check</button>
-                                            <button class="btn-danger btn btn-sm" id="hapusmarkerdinas" data-iddatadinas=<?php echo $dinas->id_dinas?>><span class="glyphicon glyphicon-eye-close"></span> Uncheck</button>
-                                            <button class="btn-success btn btn-sm" id="gantistatusdinas" data-iddatadinas=<?php echo $dinas->id_dinas?>><span class="glyphicon glyphicon-cog"></span> Done</button>
+                                            <button class="btn-danger btn btn-sm" id="gantistatusdinas" data-iddatadinas=<?php echo $dinas->id_dinas?>><span class="glyphicon glyphicon-cog"></span> Batal</button>
                                         </td>
                                     </tr>
                                     <?php
@@ -77,8 +78,7 @@ var table;
 $(document).ready(function() {
 table = $('#DataTable').DataTable( {
     responsive: true,
-    "lengthMenu": [ 5, 10, 25, 50, 75, 100 ],
-    "order": [["3","asc"]]
+    "lengthMenu": [ 5, 10, 25, 50, 75, 100 ]
   } );
 
 } );
@@ -109,15 +109,6 @@ $(document).on('click','#clearmap',clearmap)
             map: map,
             icon: image
         });
-        // Add a listener for the click event
-        // google.maps.event.addListener(map, 'rightclick', addLatLng);
-        // google.maps.event.addListener(map, "rightclick", function(event) {
-        //   var lat = event.latLng.lat();
-        //   var lng = event.latLng.lng();
-        //   $('#latitude').val(lat);
-        //   $('#longitude').val(lng);
-        //   //alert(lat +" dan "+lng);
-        // });
     }
 
     /**
@@ -198,6 +189,7 @@ $(document).on('click','#clearmap',clearmap)
                 if (data.status!='error') {
                     //load marker
                     $.each(data.msg,function(k,v){
+
                         var myLatLng = {lat: parseFloat(v['latitude']), lng: parseFloat(v['longitude'])};
                         addMarker((v['id_dinas']),myLatLng,"<b>"+v['kelembagaan']+", "+v['wilayah']+"</b> <br><br>"+v['alamat'] );
                     })
@@ -212,7 +204,7 @@ $(document).on('click','#clearmap',clearmap)
 
 
     function gantistatusdinas() {//delete jalan
-        if (confirm("Anda yakin akan Sudah mengunjungi Dinas ini?")) {
+        if (confirm("Anda yakin akan Membatalkan Dinas ini?")) {
             var id = $(this).data('iddatadinas');
             var datadinas = {'id_dinas':id};
             $.ajax({

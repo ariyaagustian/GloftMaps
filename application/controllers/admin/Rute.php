@@ -21,7 +21,7 @@ class Rute extends CI_Controller
   {
     $data = array('content' => 'admin/rute',
     'datadinas' => $this->model_dinas->getAll(),
-    'rutedinas' => $this->model_dinas->getbyStatus()
+    'rutedinas' => $this->model_dinas->getbyStatus(0)
   );
     $this->load->view('templates/template-admin', $data);
 
@@ -29,7 +29,7 @@ class Rute extends CI_Controller
   public function datarute()
   {
     // FETCH DATA DINAS
-     $d = $this->model_dinas->getbyStatus()->result();
+     $d = $this->model_dinas->getbyStatus(0)->result();
      $data = [];
      $data["data"] = [];
      $i = 1;
@@ -40,9 +40,10 @@ class Rute extends CI_Controller
      header('Content-Type: application/json');
      echo json_encode($data);
   }
+
   public function datarutemaps()
   {
-    $d = $this->model_dinas->getbyStatus()->result();
+    $d = $this->model_dinas->getbyStatus(0)->result();
     $data = [];
     $i = 1;
     $data[] = (object)  ["lat"=>"-6.984034","lng"=>"107.632257"];
@@ -136,9 +137,14 @@ class Rute extends CI_Controller
     // header('Content-Type: application/json');
     // echo json_encode($jarak);
   }
-  public function test()
+  public function generateRute()
   {
-    $d = $this->model_dinas->getbyStatus()->result();
+    $d = $this->model_dinas->getbyStatus(0)->result();
+    if ($this->input->post('generate_rute')!=null) {
+      $jmlRute = $this->input->post('generate_rute');
+    }else{
+      $jmlRute = 0;
+    }
     $dis = function($latitude1, $longitude1, $latitude2, $longitude2) {
         $earth_radius = 6371;
         $dLat = deg2rad($latitude2 - $latitude1);
@@ -156,7 +162,8 @@ class Rute extends CI_Controller
     $complete = [];
     $i = 0;
     foreach ($latLng as $key => &$value) {
-        $di = $value;
+        if ($key < $jmlRute) {
+          $di = $value;
         $completed = [];
         $s = 1;
         foreach ($latLng as $key1 => $value1) {
@@ -183,14 +190,47 @@ class Rute extends CI_Controller
             $latLng[$keys] = $temp;
             $latLng[($key+1)] = ["id"=>$min["id_dest"],"lat"=>$min["dest_lat"],"lng"=>$min["dest_lng"]];
           }
-          $complete[] = $completed;
+          $complete[] = $completed[0];
+        }
         }
         // if (isset($completed[0]["id_dest"])) {
           // $latLng[$key+1] = ["id"=>$completed[0]["id_dest"],"lat"=>$completed[0]["dest_lat"],"lng"=>$completed[0]["dest_lng"]];
         // }
 
     }
-    header('Content-Type: application/json');
-    echo json_encode($complete);
+    //header('Content-Type: application/json');
+    //$dinas = [];
+    if ($jmlRute > 0) {
+    foreach ($complete as $key => $value) {
+      $dinas = $this->model_dinas->getbyiddinas($value["id_dest"], 0)->row();
+      $dinasTable[] = $this->model_dinas->getidstatus($value["id_dest"], 0)->row();
+    }
+    }else{
+      $dinas = null;
+    }
+    $data = array('content' => 'admin/rute',
+    'data' => $complete,
+    'dinas' => $dinas,
+    'dinasTable' => $dinasTable );
+    $this->load->view('templates/template-admin', $data);
   }
 }
+
+
+function gantistatusdinas(){
+      // if (!$this->input->is_ajax_request()) {
+      //     show_404();
+      // }else{
+          $id = $this->input->post('id_dinas');
+          if ($id!=null){
+              $status = 'success';
+              $msg = $this->model_dinas->donestatusdinas($id);
+              $datadinas = $this->model_dinas->read($this->input->post('id_dinas'))->result();
+          }else{
+              $status = 'error';
+              $msg = 'data tidak ditemukan';
+              $datadinas = null;
+          }
+          $this->output->set_content_type('application/json')->set_output(json_encode(array('status'=>$status,'msg'=>$msg,'datadinas'=>$datadinas)));
+      // }
+  }

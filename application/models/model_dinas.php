@@ -21,8 +21,8 @@ class Model_dinas extends CI_Model{
         $query = $this->db->get('tbl_dinas');
         return $query;
     }
-    public function getbyStatus(){
-        $query = $this->db->get_where('tbl_dinas', array('status' => '0'));
+    public function getbyStatus($stat){
+        $query = $this->db->get_where('tbl_dinas', array('status' => $stat));
         return $query;
     }
     public function getbyiddinas($id_dinas){
@@ -30,9 +30,22 @@ class Model_dinas extends CI_Model{
         $query = $this->db->get('tbl_dinas');
         return $query;
     }
+    public function getidstatus($id_dinas, $stat){
+        $array = array('id_dinas' => $id_dinas, 'status' => $stat);
+        $this->db->where($array);
+        $query = $this->db->get('tbl_dinas');
+        return $query;
+    }
+
+    public function donestatusdinas($id_dinas){
+        $this->db->set('status', 1);
+        $this->db->where('id_dinas', $id_dinas);
+        $query = $this->db->update('tbl_dinas');
+        return $query;
+    }
 
     public function gantistatusdinas($id_dinas){
-        $this->db->set('status', 1);
+        $this->db->set('status', 0);
         $this->db->where('id_dinas', $id_dinas);
         $query = $this->db->update('tbl_dinas');
         return $query;
