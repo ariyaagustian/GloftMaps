@@ -41,6 +41,25 @@ class Rute extends CI_Controller
      echo json_encode($data);
   }
 
+  function gantistatusdinas(){
+        // if (!$this->input->is_ajax_request()) {
+        //     show_404();
+        // }else{
+            $id = $this->input->post('id_dinas');
+            if ($id!=null){
+                $status = 'success';
+                $msg = $this->model_dinas->donestatusdinas($id);
+                $datadinas = $this->model_dinas->read($this->input->post('id_dinas'))->result();
+            }else{
+                $status = 'error';
+                $msg = 'data tidak ditemukan';
+                $datadinas = null;
+            }
+            $this->output->set_content_type('application/json')->set_output(json_encode(array('status'=>$status,'msg'=>$msg,'datadinas'=>$datadinas)));
+        // }
+    }
+
+
   public function datarutemaps()
   {
     $d = $this->model_dinas->getbyStatus(0)->result();
@@ -215,22 +234,3 @@ class Rute extends CI_Controller
     $this->load->view('templates/template-admin', $data);
   }
 }
-
-
-function gantistatusdinas(){
-      // if (!$this->input->is_ajax_request()) {
-      //     show_404();
-      // }else{
-          $id = $this->input->post('id_dinas');
-          if ($id!=null){
-              $status = 'success';
-              $msg = $this->model_dinas->donestatusdinas($id);
-              $datadinas = $this->model_dinas->read($this->input->post('id_dinas'))->result();
-          }else{
-              $status = 'error';
-              $msg = 'data tidak ditemukan';
-              $datadinas = null;
-          }
-          $this->output->set_content_type('application/json')->set_output(json_encode(array('status'=>$status,'msg'=>$msg,'datadinas'=>$datadinas)));
-      // }
-  }

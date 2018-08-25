@@ -107,6 +107,10 @@ $(document).ready(function(){
 
     var directionsService = new google.maps.DirectionsService();
         var directionsDisplay = new google.maps.DirectionsRenderer();
+        var infowindow = new google.maps.InfoWindow({
+
+              maxWidth: 500
+        });
         var request = { travelMode: google.maps.TravelMode.DRIVING };
         // var mapOptions = {
         // zoom: 12,
@@ -129,9 +133,7 @@ $(document).ready(function(){
             map: map,
             icon: image
         });
-    var infowindow = new google.maps.InfoWindow({
-          maxWidth: 200
-    });
+
 
     var marker, i;
 
