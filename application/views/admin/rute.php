@@ -29,7 +29,7 @@
                               <th>Data dinas</th>
                               <th>Alamat</th>
                               <th>Status</th>
-                              <th></th>
+                              <th>Action</th>
                           </thead>
                           <tbody>
                             <?php
@@ -71,6 +71,16 @@
 
 <script>
 $(document).on('click','#gantistatusdinas',gantistatusdinas);
+
+
+var table;
+$(document).ready(function() {
+table = $('#rutedinas').DataTable( {
+    responsive: true,
+    "lengthMenu": [ 10, 20, 30, 40, 50, 100 ]
+  } );
+
+} );
 
 function gantistatusdinas() {//delete jalan
     if (confirm("Anda yakin sudah mengunjungi Dinas ini?")) {
