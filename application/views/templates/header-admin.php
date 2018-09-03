@@ -44,7 +44,7 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="navbar">
             <ul class="nav navbar-nav">
-              <li class="navbar-header"><a href="#">GloftMaps</a></li>
+              <li class="navbar-header"><img src="https://gloftech.co.id/assets/img/logo/logo-gloftech.png" style="margin-top:15px"></li>
               <li class='dropdown'><a href='#' class='dropdown-toggle' data-toggle='dropdown'><span class="glyphicon glyphicon-list"></span> Data <b class='caret'></b></a>
                   <ul class='dropdown-menu'>
                       <li><?php echo anchor('admin/dinas','Dinas') ?></li>
